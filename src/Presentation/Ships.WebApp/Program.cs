@@ -10,7 +10,9 @@ namespace Ships.WebApp
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            builder.Services.AddHttpContextAccessor();
+
 
             var app = builder.Build();
 

@@ -4,25 +4,29 @@ using Ships.Domain.Entities;
 using Ships.Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Ships.Infrastructure.Persistence;
+
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IMediator _mediator;
-    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+    private readonly AuditableEntitySaveChangesInterceptor _changesInterceptor;
 
-    public ApplicationDbContext(
-      DbContextOptions<ApplicationDbContext> options,
-      IMediator mediator,
-      AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
-      : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator, AuditableEntitySaveChangesInterceptor changesInterceptor)
+        : base(options)
     {
         _mediator = mediator;
-        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
+        _changesInterceptor = changesInterceptor;
     }
+
     public DbSet<Ship> Ships => Set<Ship>();
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await _mediator.DispatchDomainEvents(this, cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,13 +37,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+        optionsBuilder.AddInterceptors(_changesInterceptor);
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        await _mediator.DispatchDomainEvents(this);
-
-        return await base.SaveChangesAsync(cancellationToken);
-    }
 }

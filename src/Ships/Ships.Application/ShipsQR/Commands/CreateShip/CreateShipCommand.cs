@@ -10,7 +10,7 @@ public record CreateShipCommand : IRequest<int>
     public string Name { get; init; }
     public int Length { get; set; }
     public int Width { get; set; }
-    public string Code { get; set; }
+    public string ShipCode { get; set; }
 }
 
 public class CreateTodoListCommandHandler : IRequestHandler<CreateShipCommand, int>
@@ -29,7 +29,7 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateShipCommand, i
         entity.Name = request.Name;
         entity.Length = request.Length;
         entity.Width = request.Width;
-        entity.Code = ShipCode.From(request.Code);
+        entity.ShipCode = ShipCode.From(request.ShipCode);
 
         _context.Ships.Add(entity);
 

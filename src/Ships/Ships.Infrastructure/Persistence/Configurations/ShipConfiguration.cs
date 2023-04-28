@@ -13,6 +13,6 @@ public class ShipConfiguration : IEntityTypeConfiguration<Ship>
             .IsRequired();
 
         builder
-            .OwnsOne(b => b.Code);
+            .OwnsOne(b => b.ShipCode);
     }
 }

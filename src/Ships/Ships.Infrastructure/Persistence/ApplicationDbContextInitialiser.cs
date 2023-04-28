@@ -53,7 +53,7 @@ public class ApplicationDbContextInitialiser
             _context.Ships.Add(new Ship
             {
                 Name = "Ship Number 1",
-                Code = ShipCode.From("AAAA-1111-A1"),
+                ShipCode = ShipCode.From("AAAA-1111-A1"),
                 Length = 40,
                 Width = 10
             });

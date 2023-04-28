@@ -12,7 +12,7 @@ public record UpdateShipCommand : IRequest
     public string Name { get; init; }
     public int Length { get; set; }
     public int Width { get; set; }
-    public string Code { get; set; }
+    public string ShipCode { get; set; }
 }
 
 public class UpdateTodoListCommandHandler : IRequestHandler<UpdateShipCommand>
@@ -37,7 +37,7 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateShipCommand>
         entity.Name = request.Name;
         entity.Length = request.Length;
         entity.Width = request.Width;
-        entity.Code = ShipCode.From(request.Code);
+        entity.ShipCode = ShipCode.From(request.ShipCode);
 
         await _context.SaveChangesAsync(cancellationToken);
 
