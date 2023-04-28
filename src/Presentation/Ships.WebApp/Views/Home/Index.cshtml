@@ -1,4 +1,8 @@
-﻿@{
+﻿@using System.Collections.ObjectModel;
+@using Ships.Application.Common.Models;
+@using Ships.Application.ShipsQR.Queries.GetShips;
+@model PaginatedList<ShipDto>;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +10,7 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@foreach (var item in Model.Items)
+{
+    <h1>@item.Name</h1>
+}

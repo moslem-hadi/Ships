@@ -5,12 +5,18 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ships.Application.ShipsQR.Queries;
 using System.Collections.ObjectModel;
+using Ships.Application.Common.Mappings;
+using Ships.Application.Common.Models;
 
 namespace Ships.Application.ShipsQR.Queries.GetShips;
 
-public record GetShipsQuery : IRequest<ReadOnlyCollection<ShipDto>>;
+public class GetShipsQuery : IRequest<PaginatedList<ShipDto>>
+{
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 10;
+}
 
-public class GetShipsQueryHandler : IRequestHandler<GetShipsQuery, ReadOnlyCollection<ShipDto>>
+public class GetShipsQueryHandler : IRequestHandler<GetShipsQuery, PaginatedList<ShipDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -21,21 +27,11 @@ public class GetShipsQueryHandler : IRequestHandler<GetShipsQuery, ReadOnlyColle
         _mapper = mapper;
     }
 
-    public async Task<ReadOnlyCollection<ShipDto>> Handle(GetShipsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<ShipDto>> Handle(GetShipsQuery request, CancellationToken cancellationToken)
     {
-        //return new ShipVm
-        //{
-        //    PriorityLevels = Enum.GetValues(typeof(PriorityLevel))
-        //        .Cast<PriorityLevel>()
-        //        .Select(p => new PriorityLevelDto { Value = (int)p, Name = p.ToString() })
-        //        .ToList(),
-
-        //    Lists = await _context.TodoLists
-        //        .AsNoTracking()
-        //        .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
-        //        .OrderBy(t => t.Title)
-        //        .ToListAsync(cancellationToken)
-        //};
-        return null;
+        return await _context.Ships
+            .OrderBy(x => x.Name)
+            .ProjectTo<ShipDto>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

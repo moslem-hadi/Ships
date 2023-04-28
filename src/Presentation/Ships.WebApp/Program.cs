@@ -6,13 +6,13 @@ namespace Ships.WebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddLogging();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
 
             builder.Services.AddHttpContextAccessor();
-
 
             var app = builder.Build();
 
