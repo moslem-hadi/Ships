@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ships.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -15,6 +16,8 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 
+    app.UseSwagger();
+    app.UseSwaggerUI();
     using (var scope = app.Services.CreateScope())
     {
         var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
@@ -27,13 +30,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseSwaggerUi3(settings =>
-{
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
-
+ 
 app.UseRouting();
 
 app.UseAuthentication();
