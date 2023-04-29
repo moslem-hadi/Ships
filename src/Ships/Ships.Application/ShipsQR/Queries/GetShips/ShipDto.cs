@@ -4,7 +4,7 @@ using Ships.Domain.ValueObjects;
 
 namespace Ships.Application.ShipsQR.Queries.GetShips;
 
-public class ShipDto : IMapFrom<Ship>
+public sealed class ShipDto : IMapFrom<Ship>
 {
     public int Id { get; init; }
 

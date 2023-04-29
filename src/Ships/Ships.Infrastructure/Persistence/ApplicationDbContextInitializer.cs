@@ -75,12 +75,69 @@ public class ApplicationDbContextInitializer
         // Default data
         if (!_context.Ships.Any())
         {
-            _context.Ships.Add(new Ship
+            _context.Ships.AddRange(new List<Ship>()
+            {
+                new Ship
             {
                 Name = "Ship Number 1",
                 ShipCode = ShipCode.From("AAAA-1111-A1"),
                 Length = 40,
+                Width = 11
+            },  new Ship
+            {
+                Name = "Ship Number 2",
+                ShipCode = ShipCode.From("AAAA-1111-A2"),
+                Length = 39,
+                Width = 23
+            },  new Ship
+            {
+                Name = "Ship Number 3",
+                ShipCode = ShipCode.From("AAAA-1111-A3"),
+                Length = 74,
+                Width = 45
+            },  new Ship
+            {
+                Name = "Ship Number 4",
+                ShipCode = ShipCode.From("AAAA-1111-A4"),
+                Length = 36,
+                Width = 34
+            },  new Ship
+            {
+                Name = "Ship Number 5",
+                ShipCode = ShipCode.From("AAAA-1111-A5"),
+                Length = 45,
+                Width = 54
+            },  new Ship
+            {
+                Name = "Ship Number 6",
+                ShipCode = ShipCode.From("AAAA-1111-A6"),
+                Length = 67,
+                Width = 13
+            },  new Ship
+            {
+                Name = "Ship Number 7",
+                ShipCode = ShipCode.From("AAAA-1111-A7"),
+                Length = 21,
                 Width = 10
+            },  new Ship
+            {
+                Name = "Ship Number 8",
+                ShipCode = ShipCode.From("AAAA-1111-A8"),
+                Length = 43,
+                Width = 10
+            },  new Ship
+            {
+                Name = "Ship Number 9",
+                ShipCode = ShipCode.From("AAAA-1111-A9"),
+                Length = 25,
+                Width = 75
+            },  new Ship
+            {
+                Name = "Ship Number 10",
+                ShipCode = ShipCode.From("AAAA-1111-B1"),
+                Length = 45,
+                Width = 47
+            },
             });
 
             await _context.SaveChangesAsync();

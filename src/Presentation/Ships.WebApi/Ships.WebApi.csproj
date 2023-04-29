@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Ships\Ships.Infrastructure\Ships.Infrastructure.csproj" />
   </ItemGroup>
 

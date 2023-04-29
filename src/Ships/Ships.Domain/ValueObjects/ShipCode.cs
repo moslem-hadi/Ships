@@ -1,6 +1,6 @@
 ﻿namespace Ships.Domain.ValueObjects;
 
-public class ShipCode : ValueObject
+public sealed class ShipCode : ValueObject
 {
     static ShipCode()
     {

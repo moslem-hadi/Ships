@@ -1,0 +1,1528 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Swagger specification",
+    "version": "1.0.0"
+  },
+  "definitions": {
+    "ShipsController": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseApiController"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "BaseApiController": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ControllerBase"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "ControllerBase": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "HttpContext",
+        "Request",
+        "Response",
+        "RouteData",
+        "ModelState",
+        "ControllerContext",
+        "MetadataProvider",
+        "ModelBinderFactory",
+        "Url",
+        "ObjectValidator",
+        "ProblemDetailsFactory",
+        "User"
+      ],
+      "properties": {
+        "HttpContext": {
+          "$ref": "#/definitions/HttpContext"
+        },
+        "Request": {
+          "$ref": "#/definitions/HttpRequest"
+        },
+        "Response": {
+          "$ref": "#/definitions/HttpResponse"
+        },
+        "RouteData": {
+          "$ref": "#/definitions/RouteData"
+        },
+        "ModelState": {
+          "$ref": "#/definitions/ModelStateDictionary"
+        },
+        "ControllerContext": {
+          "$ref": "#/definitions/ControllerContext"
+        },
+        "MetadataProvider": {
+          "$ref": "#/definitions/IModelMetadataProvider"
+        },
+        "ModelBinderFactory": {
+          "$ref": "#/definitions/IModelBinderFactory"
+        },
+        "Url": {
+          "$ref": "#/definitions/IUrlHelper"
+        },
+        "ObjectValidator": {
+          "$ref": "#/definitions/IObjectModelValidator"
+        },
+        "ProblemDetailsFactory": {
+          "$ref": "#/definitions/ProblemDetailsFactory"
+        },
+        "User": {
+          "$ref": "#/definitions/ClaimsPrincipal"
+        }
+      }
+    },
+    "HttpContext": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "HttpRequest": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "BodyReader",
+        "RouteValues"
+      ],
+      "properties": {
+        "BodyReader": {
+          "$ref": "#/definitions/PipeReader"
+        },
+        "RouteValues": {
+          "$ref": "#/definitions/RouteValueDictionary"
+        }
+      }
+    },
+    "PipeReader": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "RouteValueDictionary": {
+      "type": "object",
+      "required": [
+        "_arrayStorage",
+        "Comparer",
+        "Count",
+        "Keys",
+        "Values"
+      ],
+      "properties": {
+        "_arrayStorage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyValuePairOfStringAndObject"
+          }
+        },
+        "_propertyStorage": {
+          "$ref": "#/definitions/PropertyStorage"
+        },
+        "Item": {},
+        "Comparer": {
+          "$ref": "#/definitions/IEqualityComparerOfString"
+        },
+        "Count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Values": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    },
+    "KeyValuePairOfStringAndObject": {
+      "type": "object",
+      "required": [
+        "Key",
+        "Value"
+      ],
+      "properties": {
+        "Key": {
+          "type": "string"
+        },
+        "Value": {}
+      }
+    },
+    "PropertyStorage": {
+      "type": "object",
+      "required": [
+        "Value",
+        "Properties"
+      ],
+      "properties": {
+        "Value": {},
+        "Properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PropertyHelper"
+          }
+        }
+      }
+    },
+    "PropertyHelper": {
+      "type": "object",
+      "required": [
+        "Property",
+        "Name",
+        "ValueGetter",
+        "ValueSetter"
+      ],
+      "properties": {
+        "Property": {
+          "$ref": "#/definitions/PropertyInfo"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ValueGetter": {
+          "$ref": "#/definitions/FuncOfObjectAndObject"
+        },
+        "ValueSetter": {
+          "$ref": "#/definitions/ActionOfObjectAndObject"
+        }
+      }
+    },
+    "PropertyInfo": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MemberInfo"
+        },
+        {
+          "type": "object",
+          "x-abstract": true,
+          "required": [
+            "MemberType",
+            "IsSpecialName"
+          ],
+          "properties": {
+            "MemberType": {
+              "$ref": "#/definitions/MemberTypes"
+            },
+            "IsSpecialName": {
+              "type": "boolean"
+            },
+            "GetMethod": {
+              "$ref": "#/definitions/MethodInfo"
+            },
+            "SetMethod": {
+              "$ref": "#/definitions/MethodInfo"
+            }
+          }
+        }
+      ]
+    },
+    "MemberTypes": {
+      "type": "integer",
+      "description": "",
+      "x-enumFlags": true,
+      "x-enumNames": [
+        "Constructor",
+        "Event",
+        "Field",
+        "Method",
+        "Property",
+        "TypeInfo",
+        "Custom",
+        "NestedType",
+        "All"
+      ],
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        191
+      ]
+    },
+    "MethodInfo": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MethodBase"
+        },
+        {
+          "type": "object",
+          "x-abstract": true,
+          "required": [
+            "MemberType",
+            "ReturnParameter",
+            "ReturnType"
+          ],
+          "properties": {
+            "MemberType": {
+              "$ref": "#/definitions/MemberTypes"
+            },
+            "ReturnParameter": {
+              "$ref": "#/definitions/ParameterInfo"
+            },
+            "ReturnType": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "ParameterInfo": {
+      "type": "object",
+      "required": [
+        "Attributes",
+        "Member",
+        "ParameterType",
+        "Position",
+        "IsIn",
+        "IsLcid",
+        "IsOptional",
+        "IsOut",
+        "IsRetval",
+        "HasDefaultValue",
+        "CustomAttributes",
+        "MetadataToken"
+      ],
+      "properties": {
+        "Attributes": {
+          "$ref": "#/definitions/ParameterAttributes"
+        },
+        "Member": {
+          "$ref": "#/definitions/MemberInfo"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "ParameterType": {
+          "type": "string"
+        },
+        "Position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "IsIn": {
+          "type": "boolean"
+        },
+        "IsLcid": {
+          "type": "boolean"
+        },
+        "IsOptional": {
+          "type": "boolean"
+        },
+        "IsOut": {
+          "type": "boolean"
+        },
+        "IsRetval": {
+          "type": "boolean"
+        },
+        "DefaultValue": {},
+        "RawDefaultValue": {},
+        "HasDefaultValue": {
+          "type": "boolean"
+        },
+        "CustomAttributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeData"
+          }
+        },
+        "MetadataToken": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ParameterAttributes": {
+      "type": "integer",
+      "description": "",
+      "x-enumFlags": true,
+      "x-enumNames": [
+        "None",
+        "In",
+        "Out",
+        "Lcid",
+        "Retval",
+        "Optional",
+        "HasDefault",
+        "HasFieldMarshal",
+        "Reserved3",
+        "Reserved4",
+        "ReservedMask"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        4096,
+        8192,
+        16384,
+        32768,
+        61440
+      ]
+    },
+    "MemberInfo": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "Module",
+        "CustomAttributes",
+        "IsCollectible",
+        "MetadataToken"
+      ],
+      "properties": {
+        "Module": {
+          "$ref": "#/definitions/Module"
+        },
+        "CustomAttributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeData"
+          }
+        },
+        "IsCollectible": {
+          "type": "boolean"
+        },
+        "MetadataToken": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Module": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "Assembly",
+        "FullyQualifiedName",
+        "Name",
+        "MDStreamVersion",
+        "ModuleVersionId",
+        "ScopeName",
+        "ModuleHandle",
+        "CustomAttributes",
+        "MetadataToken"
+      ],
+      "properties": {
+        "Assembly": {
+          "$ref": "#/definitions/Assembly"
+        },
+        "FullyQualifiedName": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "MDStreamVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ModuleVersionId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "ScopeName": {
+          "type": "string"
+        },
+        "ModuleHandle": {
+          "$ref": "#/definitions/ModuleHandle"
+        },
+        "CustomAttributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeData"
+          }
+        },
+        "MetadataToken": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Assembly": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "DefinedTypes",
+        "ExportedTypes",
+        "ImageRuntimeVersion",
+        "IsDynamic",
+        "Location",
+        "ReflectionOnly",
+        "IsCollectible",
+        "IsFullyTrusted",
+        "CustomAttributes",
+        "EscapedCodeBase",
+        "ManifestModule",
+        "Modules",
+        "GlobalAssemblyCache",
+        "HostContext",
+        "SecurityRuleSet"
+      ],
+      "properties": {
+        "DefinedTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ExportedTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "CodeBase": {
+          "type": "string",
+          "x-deprecated": true,
+          "x-deprecatedMessage": "Assembly.CodeBase and Assembly.EscapedCodeBase are only included for .NET Framework compatibility. Use Assembly.Location."
+        },
+        "EntryPoint": {
+          "$ref": "#/definitions/MethodInfo"
+        },
+        "FullName": {
+          "type": "string"
+        },
+        "ImageRuntimeVersion": {
+          "type": "string"
+        },
+        "IsDynamic": {
+          "type": "boolean"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "ReflectionOnly": {
+          "type": "boolean"
+        },
+        "IsCollectible": {
+          "type": "boolean"
+        },
+        "IsFullyTrusted": {
+          "type": "boolean"
+        },
+        "CustomAttributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeData"
+          }
+        },
+        "EscapedCodeBase": {
+          "type": "string",
+          "x-deprecated": true,
+          "x-deprecatedMessage": "Assembly.CodeBase and Assembly.EscapedCodeBase are only included for .NET Framework compatibility. Use Assembly.Location."
+        },
+        "ManifestModule": {
+          "$ref": "#/definitions/Module"
+        },
+        "Modules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Module"
+          }
+        },
+        "GlobalAssemblyCache": {
+          "type": "boolean",
+          "x-deprecated": true,
+          "x-deprecatedMessage": "The Global Assembly Cache is not supported."
+        },
+        "HostContext": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "SecurityRuleSet": {
+          "$ref": "#/definitions/SecurityRuleSet"
+        }
+      }
+    },
+    "CustomAttributeData": {
+      "type": "object",
+      "required": [
+        "AttributeType",
+        "Constructor",
+        "ConstructorArguments",
+        "NamedArguments"
+      ],
+      "properties": {
+        "AttributeType": {
+          "type": "string"
+        },
+        "Constructor": {
+          "$ref": "#/definitions/ConstructorInfo"
+        },
+        "ConstructorArguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeTypedArgument"
+          }
+        },
+        "NamedArguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomAttributeNamedArgument"
+          }
+        }
+      }
+    },
+    "ConstructorInfo": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MethodBase"
+        },
+        {
+          "type": "object",
+          "x-abstract": true,
+          "required": [
+            "MemberType"
+          ],
+          "properties": {
+            "MemberType": {
+              "$ref": "#/definitions/MemberTypes"
+            }
+          }
+        }
+      ]
+    },
+    "MethodBase": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MemberInfo"
+        },
+        {
+          "type": "object",
+          "x-abstract": true,
+          "required": [
+            "MethodImplementationFlags",
+            "CallingConvention",
+            "IsAbstract",
+            "IsConstructor",
+            "IsFinal",
+            "IsHideBySig",
+            "IsSpecialName",
+            "IsStatic",
+            "IsVirtual",
+            "IsAssembly",
+            "IsFamily",
+            "IsFamilyAndAssembly",
+            "IsFamilyOrAssembly",
+            "IsPrivate",
+            "IsPublic",
+            "IsConstructedGenericMethod",
+            "IsGenericMethod",
+            "IsGenericMethodDefinition",
+            "ContainsGenericParameters",
+            "IsSecurityCritical",
+            "IsSecuritySafeCritical",
+            "IsSecurityTransparent"
+          ],
+          "properties": {
+            "MethodImplementationFlags": {
+              "$ref": "#/definitions/MethodImplAttributes"
+            },
+            "CallingConvention": {
+              "$ref": "#/definitions/CallingConventions"
+            },
+            "IsAbstract": {
+              "type": "boolean"
+            },
+            "IsConstructor": {
+              "type": "boolean"
+            },
+            "IsFinal": {
+              "type": "boolean"
+            },
+            "IsHideBySig": {
+              "type": "boolean"
+            },
+            "IsSpecialName": {
+              "type": "boolean"
+            },
+            "IsStatic": {
+              "type": "boolean"
+            },
+            "IsVirtual": {
+              "type": "boolean"
+            },
+            "IsAssembly": {
+              "type": "boolean"
+            },
+            "IsFamily": {
+              "type": "boolean"
+            },
+            "IsFamilyAndAssembly": {
+              "type": "boolean"
+            },
+            "IsFamilyOrAssembly": {
+              "type": "boolean"
+            },
+            "IsPrivate": {
+              "type": "boolean"
+            },
+            "IsPublic": {
+              "type": "boolean"
+            },
+            "IsConstructedGenericMethod": {
+              "type": "boolean"
+            },
+            "IsGenericMethod": {
+              "type": "boolean"
+            },
+            "IsGenericMethodDefinition": {
+              "type": "boolean"
+            },
+            "ContainsGenericParameters": {
+              "type": "boolean"
+            },
+            "IsSecurityCritical": {
+              "type": "boolean"
+            },
+            "IsSecuritySafeCritical": {
+              "type": "boolean"
+            },
+            "IsSecurityTransparent": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "MethodImplAttributes": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "IL",
+        "Managed",
+        "Native",
+        "OPTIL",
+        "Runtime",
+        "CodeTypeMask",
+        "Unmanaged",
+        "ManagedMask",
+        "NoInlining",
+        "ForwardRef",
+        "Synchronized",
+        "NoOptimization",
+        "PreserveSig",
+        "AggressiveInlining",
+        "AggressiveOptimization",
+        "InternalCall",
+        "MaxMethodImplVal"
+      ],
+      "enum": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        3,
+        4,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        4096,
+        65535
+      ]
+    },
+    "CallingConventions": {
+      "type": "integer",
+      "description": "",
+      "x-enumFlags": true,
+      "x-enumNames": [
+        "Standard",
+        "VarArgs",
+        "Any",
+        "HasThis",
+        "ExplicitThis"
+      ],
+      "enum": [
+        1,
+        2,
+        3,
+        32,
+        64
+      ]
+    },
+    "CustomAttributeTypedArgument": {
+      "type": "object",
+      "required": [
+        "ArgumentType"
+      ],
+      "properties": {
+        "ArgumentType": {
+          "type": "string"
+        },
+        "Value": {}
+      }
+    },
+    "CustomAttributeNamedArgument": {
+      "type": "object",
+      "required": [
+        "MemberInfo",
+        "TypedValue",
+        "MemberName",
+        "IsField"
+      ],
+      "properties": {
+        "MemberInfo": {
+          "$ref": "#/definitions/MemberInfo"
+        },
+        "TypedValue": {
+          "$ref": "#/definitions/CustomAttributeTypedArgument"
+        },
+        "MemberName": {
+          "type": "string"
+        },
+        "IsField": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SecurityRuleSet": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Level1",
+        "Level2"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "ModuleHandle": {
+      "type": "object",
+      "required": [
+        "MDStreamVersion"
+      ],
+      "properties": {
+        "MDStreamVersion": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "FuncOfObjectAndObject": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MulticastDelegate"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "MulticastDelegate": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Delegate"
+        },
+        {
+          "type": "object",
+          "x-abstract": true
+        }
+      ]
+    },
+    "Delegate": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "Method"
+      ],
+      "properties": {
+        "Target": {},
+        "Method": {
+          "$ref": "#/definitions/MethodInfo"
+        }
+      }
+    },
+    "ActionOfObjectAndObject": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MulticastDelegate"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "IEqualityComparerOfString": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "HttpResponse": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "BodyWriter"
+      ],
+      "properties": {
+        "BodyWriter": {
+          "$ref": "#/definitions/PipeWriter"
+        }
+      }
+    },
+    "PipeWriter": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "CanGetUnflushedBytes",
+        "UnflushedBytes"
+      ],
+      "properties": {
+        "CanGetUnflushedBytes": {
+          "type": "boolean"
+        },
+        "UnflushedBytes": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RouteData": {
+      "type": "object",
+      "required": [
+        "DataTokens",
+        "Routers",
+        "Values"
+      ],
+      "properties": {
+        "DataTokens": {
+          "$ref": "#/definitions/RouteValueDictionary"
+        },
+        "Routers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IRouter"
+          }
+        },
+        "Values": {
+          "$ref": "#/definitions/RouteValueDictionary"
+        }
+      }
+    },
+    "IRouter": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "ModelStateDictionary": {
+      "type": "object",
+      "required": [
+        "Root",
+        "MaxAllowedErrors",
+        "HasReachedMaxErrors",
+        "ErrorCount",
+        "Count",
+        "Keys",
+        "Values",
+        "IsValid",
+        "ValidationState"
+      ],
+      "properties": {
+        "Root": {
+          "$ref": "#/definitions/ModelStateEntry"
+        },
+        "MaxAllowedErrors": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "HasReachedMaxErrors": {
+          "type": "boolean"
+        },
+        "ErrorCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Keys": {
+          "type": "array",
+          "items": {
+            "additionalProperties": {}
+          }
+        },
+        "Values": {
+          "type": "array",
+          "items": {
+            "additionalProperties": {}
+          }
+        },
+        "IsValid": {
+          "type": "boolean"
+        },
+        "ValidationState": {
+          "$ref": "#/definitions/ModelValidationState"
+        },
+        "Item": {
+          "$ref": "#/definitions/ModelStateEntry"
+        },
+        "MaxValidationDepth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "MaxStateDepth": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ModelStateEntry": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "Errors",
+        "ValidationState"
+      ],
+      "properties": {
+        "RawValue": {},
+        "AttemptedValue": {
+          "type": "string"
+        },
+        "Errors": {
+          "$ref": "#/definitions/ModelErrorCollection"
+        },
+        "ValidationState": {
+          "$ref": "#/definitions/ModelValidationState"
+        }
+      }
+    },
+    "ModelErrorCollection": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ModelError"
+      }
+    },
+    "ModelError": {
+      "type": "object",
+      "required": [
+        "ErrorMessage"
+      ],
+      "properties": {
+        "Exception": {
+          "$ref": "#/definitions/Exception"
+        },
+        "ErrorMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "Exception": {
+      "type": "object",
+      "required": [
+        "Message"
+      ],
+      "properties": {
+        "Message": {
+          "type": "string"
+        },
+        "InnerException": {
+          "$ref": "#/definitions/Exception"
+        },
+        "Source": {
+          "type": "string"
+        },
+        "StackTrace": {
+          "type": "string"
+        }
+      }
+    },
+    "ModelValidationState": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Unvalidated",
+        "Invalid",
+        "Valid",
+        "Skipped"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "ControllerContext": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ActionContext"
+        },
+        {
+          "type": "object",
+          "required": [
+            "ActionDescriptor",
+            "ValueProviderFactories"
+          ],
+          "properties": {
+            "ActionDescriptor": {
+              "$ref": "#/definitions/ControllerActionDescriptor"
+            },
+            "ValueProviderFactories": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IValueProviderFactory"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ControllerActionDescriptor": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ActionDescriptor"
+        },
+        {
+          "type": "object",
+          "required": [
+            "ControllerName",
+            "ActionName",
+            "MethodInfo",
+            "ControllerTypeInfo"
+          ],
+          "properties": {
+            "ControllerName": {
+              "type": "string"
+            },
+            "ActionName": {
+              "type": "string"
+            },
+            "MethodInfo": {
+              "$ref": "#/definitions/MethodInfo"
+            },
+            "ControllerTypeInfo": {
+              "type": "string"
+            },
+            "DisplayName": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "ActionDescriptor": {
+      "type": "object",
+      "required": [
+        "Id",
+        "RouteValues",
+        "EndpointMetadata",
+        "Parameters",
+        "BoundProperties",
+        "FilterDescriptors",
+        "Properties"
+      ],
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "RouteValues": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "AttributeRouteInfo": {
+          "$ref": "#/definitions/AttributeRouteInfo"
+        },
+        "ActionConstraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IActionConstraintMetadata"
+          }
+        },
+        "EndpointMetadata": {
+          "type": "array",
+          "items": {}
+        },
+        "Parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ParameterDescriptor"
+          }
+        },
+        "BoundProperties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ParameterDescriptor"
+          }
+        },
+        "FilterDescriptors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilterDescriptor"
+          }
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "Properties": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      }
+    },
+    "AttributeRouteInfo": {
+      "type": "object",
+      "required": [
+        "Order",
+        "SuppressLinkGeneration",
+        "SuppressPathMatching"
+      ],
+      "properties": {
+        "Template": {
+          "type": "string"
+        },
+        "Order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "SuppressLinkGeneration": {
+          "type": "boolean"
+        },
+        "SuppressPathMatching": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IActionConstraintMetadata": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "ParameterDescriptor": {
+      "type": "object",
+      "required": [
+        "Name",
+        "ParameterType"
+      ],
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "ParameterType": {
+          "type": "string"
+        },
+        "BindingInfo": {
+          "$ref": "#/definitions/BindingInfo"
+        }
+      }
+    },
+    "BindingInfo": {
+      "type": "object",
+      "required": [
+        "EmptyBodyBehavior"
+      ],
+      "properties": {
+        "BindingSource": {
+          "$ref": "#/definitions/BindingSource"
+        },
+        "BinderModelName": {
+          "type": "string"
+        },
+        "BinderType": {
+          "type": "string"
+        },
+        "PropertyFilterProvider": {
+          "$ref": "#/definitions/IPropertyFilterProvider"
+        },
+        "RequestPredicate": {
+          "$ref": "#/definitions/FuncOfActionContextAndBoolean"
+        },
+        "EmptyBodyBehavior": {
+          "$ref": "#/definitions/EmptyBodyBehavior"
+        }
+      }
+    },
+    "BindingSource": {
+      "type": "object",
+      "required": [
+        "DisplayName",
+        "Id",
+        "IsGreedy",
+        "IsFromRequest"
+      ],
+      "properties": {
+        "DisplayName": {
+          "type": "string"
+        },
+        "Id": {
+          "type": "string"
+        },
+        "IsGreedy": {
+          "type": "boolean"
+        },
+        "IsFromRequest": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IPropertyFilterProvider": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "PropertyFilter"
+      ],
+      "properties": {
+        "PropertyFilter": {
+          "$ref": "#/definitions/FuncOfModelMetadataAndBoolean"
+        }
+      }
+    },
+    "FuncOfModelMetadataAndBoolean": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MulticastDelegate"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "FuncOfActionContextAndBoolean": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MulticastDelegate"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "EmptyBodyBehavior": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Default",
+        "Allow",
+        "Disallow"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "FilterDescriptor": {
+      "type": "object",
+      "required": [
+        "Filter",
+        "Order",
+        "Scope"
+      ],
+      "properties": {
+        "Filter": {
+          "$ref": "#/definitions/IFilterMetadata"
+        },
+        "Order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Scope": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "IFilterMetadata": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "IValueProviderFactory": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "ActionContext": {
+      "type": "object",
+      "required": [
+        "ActionDescriptor",
+        "HttpContext",
+        "ModelState",
+        "RouteData"
+      ],
+      "properties": {
+        "ActionDescriptor": {
+          "$ref": "#/definitions/ActionDescriptor"
+        },
+        "HttpContext": {
+          "$ref": "#/definitions/HttpContext"
+        },
+        "ModelState": {
+          "$ref": "#/definitions/ModelStateDictionary"
+        },
+        "RouteData": {
+          "$ref": "#/definitions/RouteData"
+        }
+      }
+    },
+    "IModelMetadataProvider": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "IModelBinderFactory": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "IUrlHelper": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "ActionContext"
+      ],
+      "properties": {
+        "ActionContext": {
+          "$ref": "#/definitions/ActionContext"
+        }
+      }
+    },
+    "IObjectModelValidator": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "ProblemDetailsFactory": {
+      "type": "object",
+      "x-abstract": true
+    },
+    "ClaimsPrincipal": {
+      "type": "object",
+      "required": [
+        "Claims",
+        "Identities"
+      ],
+      "properties": {
+        "Claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Claim"
+          }
+        },
+        "Identities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClaimsIdentity"
+          }
+        },
+        "Identity": {
+          "$ref": "#/definitions/IIdentity"
+        }
+      }
+    },
+    "Claim": {
+      "type": "object",
+      "required": [
+        "Issuer",
+        "OriginalIssuer",
+        "Properties",
+        "Type",
+        "Value",
+        "ValueType"
+      ],
+      "properties": {
+        "Issuer": {
+          "type": "string"
+        },
+        "OriginalIssuer": {
+          "type": "string"
+        },
+        "Properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "Subject": {
+          "$ref": "#/definitions/ClaimsIdentity"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Value": {
+          "type": "string"
+        },
+        "ValueType": {
+          "type": "string"
+        }
+      }
+    },
+    "ClaimsIdentity": {
+      "type": "object",
+      "required": [
+        "IsAuthenticated",
+        "Claims",
+        "NameClaimType",
+        "RoleClaimType"
+      ],
+      "properties": {
+        "AuthenticationType": {
+          "type": "string"
+        },
+        "IsAuthenticated": {
+          "type": "boolean"
+        },
+        "Actor": {
+          "$ref": "#/definitions/ClaimsIdentity"
+        },
+        "BootstrapContext": {},
+        "Claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Claim"
+          }
+        },
+        "Label": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "NameClaimType": {
+          "type": "string"
+        },
+        "RoleClaimType": {
+          "type": "string"
+        }
+      }
+    },
+    "IIdentity": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "IsAuthenticated"
+      ],
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "AuthenticationType": {
+          "type": "string"
+        },
+        "IsAuthenticated": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
