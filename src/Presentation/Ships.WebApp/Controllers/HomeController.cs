@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Ships.Application.Common.Models;
 using Ships.Application.ShipsQR.Queries.GetShips;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ships.WebApp.Controllers
 {
@@ -16,11 +19,36 @@ namespace Ships.WebApp.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index([FromQuery]GetShipsQuery query)
+        //{
+        //    var ships = await _mediator.Send(query);
+        //    return View(ships);
+        //}
+
+
+        public async Task<IActionResult> Index([FromQuery] GetShipsQuery query,
+            string currentFilter)
         {
-            var ships = await _mediator.Send(new GetShipsQuery());
+            ViewData["CurrentSort"] = query.Sort;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(query.Sort) ? "name_desc" : "";
+            ViewData["LengthSortParm"] = query.Sort == "length" ? "length_desc" : "length";
+            ViewData["WidthSortParm"] = query.Sort == "width" ? "width_desc" : "width";
+
+            if (query.Filter != null)
+            {
+                query.Page = 1;
+            }
+            else
+            {
+                query.Filter = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = query.Filter;
+
+            var ships = await _mediator.Send(query);
             return View(ships);
         }
+
 
     }
 }

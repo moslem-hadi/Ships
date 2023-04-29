@@ -48,7 +48,6 @@ public class ShipCode : ValueObject
     {
         return Code;
     }
-
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Code;

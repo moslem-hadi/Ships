@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Ships.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

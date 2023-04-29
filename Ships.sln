@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9B763366-42E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ships", "Ships", "{21F0FE28-83C6-4A01-85F8-65A08DC31237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ships.Domain", "src\Ships\Ships.Domain\Ships.Domain.csproj", "{58D9C32A-8ADB-4EC4-B9DC-621F52241600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ships.Domain", "src\Ships\Ships.Domain\Ships.Domain.csproj", "{58D9C32A-8ADB-4EC4-B9DC-621F52241600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ships.Application", "src\Ships\Ships.Application\Ships.Application.csproj", "{67D8B9A6-37DE-417A-91D0-9077E498DBD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ships.Application", "src\Ships\Ships.Application\Ships.Application.csproj", "{67D8B9A6-37DE-417A-91D0-9077E498DBD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ships.Infrastructure", "src\Ships\Ships.Infrastructure\Ships.Infrastructure.csproj", "{E55DEB53-59B5-4826-8E45-019949AA92AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ships.Infrastructure", "src\Ships\Ships.Infrastructure\Ships.Infrastructure.csproj", "{E55DEB53-59B5-4826-8E45-019949AA92AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{29851703-8BCC-4B7F-802C-0B4CCF26D35C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8C39D128-4C00-4C4B-B510-6686619BA0BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ships.WebApp", "src\Presentation\Ships.WebApp\Ships.WebApp.csproj", "{44573743-050F-4C6A-82B0-AB199E53870D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ships.WebApp", "src\Presentation\Ships.WebApp\Ships.WebApp.csproj", "{44573743-050F-4C6A-82B0-AB199E53870D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
