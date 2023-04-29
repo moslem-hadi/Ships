@@ -7,9 +7,11 @@ using Ships.Application.ShipsQR.Queries;
 using System.Collections.ObjectModel;
 using Ships.Application.Common.Mappings;
 using Ships.Application.Common.Models;
+using Ships.Application.Common.Security;
 
 namespace Ships.Application.ShipsQR.Queries.GetShips;
 
+[Authorize]
 public class GetShipsQuery : IRequest<PaginatedList<ShipDto>>
 {
     public string Sort { get; set; } 

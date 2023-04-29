@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ships.WebApp", "src\Presentation\Ships.WebApp\Ships.WebApp.csproj", "{44573743-050F-4C6A-82B0-AB199E53870D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ships.WebApi", "src\Presentation\Ships.WebApi\Ships.WebApi.csproj", "{F641B839-74D5-47EB-ACBA-35C0C6C69229}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{44573743-050F-4C6A-82B0-AB199E53870D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44573743-050F-4C6A-82B0-AB199E53870D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44573743-050F-4C6A-82B0-AB199E53870D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F641B839-74D5-47EB-ACBA-35C0C6C69229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F641B839-74D5-47EB-ACBA-35C0C6C69229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F641B839-74D5-47EB-ACBA-35C0C6C69229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F641B839-74D5-47EB-ACBA-35C0C6C69229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{E55DEB53-59B5-4826-8E45-019949AA92AC} = {21F0FE28-83C6-4A01-85F8-65A08DC31237}
 		{8C39D128-4C00-4C4B-B510-6686619BA0BE} = {9B763366-42EB-4A4D-A9CE-0F23CC2413AA}
 		{44573743-050F-4C6A-82B0-AB199E53870D} = {8C39D128-4C00-4C4B-B510-6686619BA0BE}
+		{F641B839-74D5-47EB-ACBA-35C0C6C69229} = {8C39D128-4C00-4C4B-B510-6686619BA0BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA4603F3-A990-4F23-BFD1-944FF7499A9F}
