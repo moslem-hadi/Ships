@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { authActions } from '../_store';
 
-export { Nav };
-
 function Nav() {
   const authUser = useSelector(x => x.auth.user);
   const dispatch = useDispatch();
@@ -58,3 +56,5 @@ function Nav() {
     </header>
   );
 }
+
+export { Nav };

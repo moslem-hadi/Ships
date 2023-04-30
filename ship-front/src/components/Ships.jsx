@@ -1,11 +1,11 @@
 import Pagination from 'react-js-pagination';
-
+import { Delete, Edit, Eye } from '../_helpers/isons';
 function Ships({ ships, handlePageChange }) {
   return (
     <>
-      <div class="table-responsive">
-        <table class="table mb-0">
-          <thead class="small text-uppercase bg-body text-muted">
+      <div className="table-responsive">
+        <table className="table mb-0">
+          <thead className="small text-uppercase bg-body text-muted">
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -17,17 +17,23 @@ function Ships({ ships, handlePageChange }) {
           </thead>
           <tbody>
             {ships.items.map((item, i) => (
-              <tr class="align-middle" key={i}>
+              <tr className="align-middle" key={i}>
                 <td>{item.id}</td>
                 <td> {item.name}</td>
                 <td>{item.shipCode.code}</td>
                 <td> {item.length}</td>
                 <td> {item.width}</td>
 
-                <td>
-                  <span>Details</span>
-                  <span>Edit</span>
-                  <span className="text-danger">Delete</span>
+                <td width={120}>
+                  <span className="icon me-3">
+                    <Eye />
+                  </span>
+                  <span className="icon me-3">
+                    <Edit />
+                  </span>
+                  <span className="text-danger icon">
+                    <Delete />
+                  </span>
                 </td>
               </tr>
             ))}
@@ -35,7 +41,7 @@ function Ships({ ships, handlePageChange }) {
         </table>
       </div>
 
-      <div class="card-footer text-end">
+      <div className="card-footer text-end">
         <Pagination
           activePage={ships.pageNumber}
           itemsCountPerPage={ships.itemsPerPage}

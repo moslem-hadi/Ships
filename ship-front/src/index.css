@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+.icon{
+  width: 20px;
+  display: inline-block;
+}
+
+
 /********loading***********/
 .loading-container{
   

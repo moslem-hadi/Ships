@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { shipsActions } from '../_store';
+import { shipsActions, modalActions } from '../_store';
 import { Ships, Loading } from '../components';
 
 export { Home };
@@ -25,12 +25,16 @@ function Home() {
   };
   return (
     <div>
-      <div class="row">
-        <div class="col-12 mb-3 mb-lg-5">
-          <div class="position-relative card table-nowrap table-card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-              <h5 class="mb-0">Ships</h5>
-              <button type="button" className="btn btn-outline-secondary">
+      <div className="row">
+        <div className="col-12 mb-3 mb-lg-5">
+          <div className="position-relative card table-nowrap table-card">
+            <div className="card-header d-flex align-items-center justify-content-between">
+              <h5 className="mb-0">Ships</h5>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => dispatch(modalActions.openModal())}
+              >
                 Add new
               </button>
             </div>
