@@ -7,10 +7,6 @@ import { store } from './_store';
 import { App } from './App';
 import './index.css';
 
-// // setup fake backend
-// import { fakeBackend } from './_helpers';
-// fakeBackend();
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 

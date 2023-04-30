@@ -18,44 +18,43 @@ export const shipsReducer = slice.reducer;
 // implementation
 
 function createInitialState() {
-    return {
-        ships: {}
-    }
+  return {
+    ships: {},
+  };
 }
 
 function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_URL}ships`;
+  const baseUrl = `${process.env.REACT_APP_API_URL}ships`;
 
-    return {
-        getAll: getAll()
-    };    
+  return {
+    getAll: getAll(),
+  };
 
-    function getAll(page = 1, pageSize = 2) {
-        debugger
-        return createAsyncThunk(
-            `${name}/`,
-            async () => await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`)
-        );
-    }
+  function getAll() {
+    return createAsyncThunk(`${name}/getAll`, async ({ page, pageSize }) => {
+      await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`);
+    });
+  }
 }
 
 function createExtraReducers() {
-    return {
-        ...getAll()
-    };
+  return {
+    ...getAll(),
+  };
 
-    function getAll(page = 1, pageSize = 2) {
-        var { pending, fulfilled, rejected } = extraActions.getAll;
-        return {
-            [pending]: (state) => {
-                state.ships = { loading: true };
-            },
-            [fulfilled]: (state, action) => {
-                state.ships = action.payload;
-            },
-            [rejected]: (state, action) => {
-                state.ships = { error: action.error };
-            }
-        };
-    }
+  function getAll() {
+    var { pending, fulfilled, rejected } = extraActions.getAll;
+    return {
+      [pending]: state => {
+        state.ships = { loading: true };
+      },
+      [fulfilled]: (state, action) => {
+        debugger;
+        state.ships = action.payload;
+      },
+      [rejected]: (state, action) => {
+        state.ships = { error: action.error };
+      },
+    };
+  }
 }
