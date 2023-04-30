@@ -33,9 +33,10 @@ function createExtraActions() {
   };
 
   function getAll() {
+    const pageSize = 2;
     return createAsyncThunk(
       `${name}/getAll`,
-      async ({ page, pageSize }, thunkApi) =>
+      async ({ page }, thunkApi) =>
         await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`)
     );
   }

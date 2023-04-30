@@ -41,7 +41,7 @@ function Ships({ ships, handlePageChange }) {
         </table>
       </div>
 
-      <div className="card-footer text-end">
+      <div className="card-footer d-flex align-items-center justify-content-between">
         <Pagination
           activePage={ships.pageNumber}
           itemsCountPerPage={ships.itemsPerPage}
@@ -51,6 +51,13 @@ function Ships({ ships, handlePageChange }) {
           itemClass="page-item"
           linkClass="page-link"
         />
+        <div>
+          {ships.totalCount} ship{ships.totalCount > 1 && 's'} in{' '}
+          {ships.totalPages} page
+          {ships.totalPages > 1 && 's'}
+          &nbsp;
+          <small>({ships.itemsPerPage} items per page)</small>
+        </div>
       </div>
     </>
   );

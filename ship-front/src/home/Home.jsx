@@ -8,9 +8,7 @@ export { Home };
 
 function Home() {
   const dispatch = useDispatch();
-  const { user: authUser } = useSelector(x => x.auth);
   const { ships } = useSelector(x => x.ships);
-  const pageSize = 2;
 
   const handlePageChange = async page => {
     await getShips(page);
@@ -21,7 +19,7 @@ function Home() {
   }, []);
 
   const getShips = async (page = 1) => {
-    await dispatch(shipsActions.getAll({ page, pageSize }));
+    await dispatch(shipsActions.getAll({ page }));
   };
   return (
     <div>

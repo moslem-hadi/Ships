@@ -33,8 +33,8 @@ function createExtraActions() {
   function createShip() {
     return createAsyncThunk(
       `${name}/post`,
-      async ({ name, width, length, code }, thunkApi) =>
-        await fetchWrapper.post(baseUrl)
+      async ({ name, width, length, shipCode }, thunkApi) =>
+        await fetchWrapper.post(baseUrl, { name, width, length, shipCode })
     );
   }
 }
