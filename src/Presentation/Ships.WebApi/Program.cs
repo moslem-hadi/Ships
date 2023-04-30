@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Ships.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -20,6 +21,7 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwagger();
     app.UseSwaggerUI();
+
     using (var scope = app.Services.CreateScope())
     {
         var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
@@ -35,8 +37,7 @@ app.UseCors(builder => builder
     .AllowAnyHeader());
 
 //app.UseHealthChecks("/health");
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseHttpsRedirection(); 
  
 app.UseRouting();
 

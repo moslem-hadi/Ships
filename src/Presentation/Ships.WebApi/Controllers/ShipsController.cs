@@ -1,11 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ships.Application.Common.Models;
 using Ships.Application.ShipsQR.Queries.GetShips;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ships.WebApi.Controllers;
 
+[Authorize]
 public class ShipsController : BaseApiController
 {
     [HttpGet]

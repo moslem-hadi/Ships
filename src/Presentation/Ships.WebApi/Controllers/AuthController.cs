@@ -13,6 +13,7 @@ namespace Ships.WebApi.Controllers;
 
 public class AuthController : BaseApiController
 {
+    //=====================>IdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
