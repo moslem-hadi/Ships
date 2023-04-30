@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Pagination from 'react-js-pagination';
 import { shipsActions } from '../_store';
+import { Ships } from '../components';
 
 export { Home };
 
@@ -29,25 +29,7 @@ function Home() {
       <p>You're logged in with React 18 + Redux & JWT!!</p>
       <h3>ships from secure api end point:</h3>
       {ships?.items?.length && (
-        <>
-          {' '}
-          <ul>
-            {ships.items.map((item, i) => (
-              <li key={i}>
-                {item.name} {item.shipCode.code}
-              </li>
-            ))}
-          </ul>
-          <Pagination
-            activePage={ships.pageNumber}
-            itemsCountPerPage={ships.itemsPerPage}
-            totalItemsCount={ships.totalCount}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            itemClass="page-item"
-            linkClass="page-link"
-          />
-        </>
+        <Ships ships={ships} handlePageChange={handlePageChange} />
       )}
       {ships?.loading && (
         <div className="spinner-border spinner-border-sm"></div>

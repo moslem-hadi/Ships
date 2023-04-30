@@ -31,9 +31,11 @@ function createExtraActions() {
   };
 
   function getAll() {
-    return createAsyncThunk(`${name}/getAll`, async ({ page, pageSize }) => {
-      await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`);
-    });
+    return createAsyncThunk(
+      `${name}/getAll`,
+      async ({ page, pageSize }, thunkApi) =>
+        await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`)
+    );
   }
 }
 
@@ -49,7 +51,6 @@ function createExtraReducers() {
         state.ships = { loading: true };
       },
       [fulfilled]: (state, action) => {
-        debugger;
         state.ships = action.payload;
       },
       [rejected]: (state, action) => {
