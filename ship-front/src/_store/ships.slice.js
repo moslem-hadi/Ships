@@ -33,7 +33,7 @@ function createExtraActions() {
   };
 
   function getAll() {
-    const pageSize = 2;
+    const pageSize = 5;
     return createAsyncThunk(
       `${name}/getAll`,
       async ({ page }, thunkApi) =>

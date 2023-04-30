@@ -1,5 +1,6 @@
 import Pagination from 'react-js-pagination';
 import { Delete, Edit, Eye } from '../_helpers/isons';
+import { Link } from 'react-router-dom';
 function Ships({ ships, handlePageChange }) {
   return (
     <>
@@ -26,7 +27,9 @@ function Ships({ ships, handlePageChange }) {
 
                 <td width={120}>
                   <span className="icon me-3">
-                    <Eye />
+                    <Link to={`/view/${item.id}`}>
+                      <Eye />
+                    </Link>
                   </span>
                   <span className="icon me-3">
                     <Edit />
@@ -56,7 +59,9 @@ function Ships({ ships, handlePageChange }) {
           {ships.totalPages} page
           {ships.totalPages > 1 && 's'}
           &nbsp;
-          <small>({ships.itemsPerPage} items per page)</small>
+          <small className="text-muted">
+            ({ships.itemsPerPage} items per page)
+          </small>
         </div>
       </div>
     </>

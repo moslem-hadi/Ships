@@ -11,6 +11,7 @@ import { Nav, PrivateRoute, Modal } from './components';
 import { Home } from './home';
 import { Login } from './login';
 import { useSelector } from 'react-redux';
+import { ViewPage } from './view/ViewPage';
 
 export { App };
 
@@ -30,6 +31,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />{' '}
+          <Route
+            path="/view/:id"
+            element={
+              <PrivateRoute>
+                <ViewPage />
               </PrivateRoute>
             }
           />
