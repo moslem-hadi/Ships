@@ -19,7 +19,9 @@ export const shipsReducer = slice.reducer;
 
 function createInitialState() {
   return {
-    ships: {},
+    ships: {
+      loading: true,
+    },
   };
 }
 

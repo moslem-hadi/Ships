@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { shipsActions } from '../_store';
-import { Ships } from '../components';
+import { Ships, Loading } from '../components';
 
 export { Home };
 
@@ -25,15 +25,23 @@ function Home() {
   };
   return (
     <div>
-      <h1>Hi {authUser?.firstName}!</h1>
-      <p>You're logged in with React 18 + Redux & JWT!!</p>
-      <h3>ships from secure api end point:</h3>
-      {ships?.items?.length && (
-        <Ships ships={ships} handlePageChange={handlePageChange} />
-      )}
-      {ships?.loading && (
-        <div className="spinner-border spinner-border-sm"></div>
-      )}
+      <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+          <div class="position-relative card table-nowrap table-card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">Ships</h5>
+              <button type="button" className="btn btn-outline-secondary">
+                Add new
+              </button>
+            </div>
+            {ships?.items?.length && (
+              <Ships ships={ships} handlePageChange={handlePageChange} />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {ships?.loading && <Loading />}
       {ships?.error && (
         <div className="text-danger">
           Error loading ships: {ships.error.message}
