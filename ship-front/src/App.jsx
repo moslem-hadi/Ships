@@ -22,31 +22,33 @@ function App() {
   history.location = useLocation();
   const { isOpen } = useSelector(store => store.modal);
   return (
-    <div className="app-container bg-light">
-      <Nav />
-      <div className="container pt-4 pb-4">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />{' '}
-          <Route
-            path="/view/:id"
-            element={
-              <PrivateRoute>
-                <ViewPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+    <>
+      <div className={`app-container bg-light ${isOpen && 'model-opened'}`}>
+        <Nav />
+        <div className="container pt-4 pb-4">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />{' '}
+            <Route
+              path="/view/:id"
+              element={
+                <PrivateRoute>
+                  <ViewPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
       </div>
       {isOpen && <Modal />}
-    </div>
+    </>
   );
 }

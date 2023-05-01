@@ -29,499 +29,101 @@ html, body{
   height: 100%;
   min-height: 100%;background-color: #f8f9fa!important;
 }
-/********loading***********/
-.loading-container{
-  
-  POSITION: absolute;
-  z-index: 11;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #edf6f9cf;
+.model-opened{
+  overflow: hidden;
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
 }
+.modal.show .modal-dialog{
+  z-index: 1050;
+}
+/********loading***********/
 .loading-container * {
-  margin: 0;
-  padding: 0;
-  border: 0;
+
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
 
-@-webkit-keyframes radar {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-
-@keyframes radar {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-@-webkit-keyframes barco {
-  0% {
-    transform: rotate(-2deg) translateX(2px);
-  }
-  50% {
-    transform: rotate(1deg) translateX(-10px);
-  }
-  100% {
-    transform: rotate(-2deg) translateX(2px);
-  }
-}
-@keyframes barco {
-  0% {
-    transform: rotate(-2deg) translateX(2px);
-  }
-  50% {
-    transform: rotate(1deg) translateX(-10px);
-  }
-  100% {
-    transform: rotate(-2deg) translateX(2px);
-  }
-}
-@-webkit-keyframes contenedores {
-  0% {
-    transform: translateX(-7px);
-  }
-  50% {
-    transform: translateX(1px);
-  }
-  100% {
-    transform: translateX(-7px);
-  }
-}
-@keyframes contenedores {
-  0% {
-    transform: translateX(-7px);
-  }
-  50% {
-    transform: translateX(1px);
-  }
-  100% {
-    transform: translateX(-7px);
-  }
-}
-@-webkit-keyframes ola {
-  0% {
-    right: 0%;
-  }
-  100% {
-    right: 100%;
-  }
-}
-@keyframes ola {
-  0% {
-    right: 0%;
-  }
-  100% {
-    right: 100%;
-  }
-}
-@-webkit-keyframes olita {
-  0% {
-    bottom: 0;
-  }
-  100% {
-    bottom: -29px;
-  }
-}
-@keyframes olita {
-  0% {
-    bottom: 0;
-  }
-  100% {
-    bottom: -29px;
-  }
-}
-.wrap {
+.page-preloader {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  opacity: 1;
+  position: fixed;
+  width: 100vw;
   height: 100vh;
-}
-
-.barco {
-  width: 400px;
-  height: 160px;
-  position: relative;
-  overflow: hidden;
-  -webkit-animation-name: barco;
-          animation-name: barco;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 5s;
-          animation-duration: 5s;
-}
-.barco .puertita {
-  position: absolute;
-  bottom: 0px;
-  left: 7px;
-  width: 5px;
-  height: 10px;
-  background-color: #58575C;
-  border-radius: 5px;
-}
-.barco .base {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-.barco .base .proa, .barco .base .popa, .barco .base .tronco {
-  background-color: #58575C;
-}
-.barco .base .anclacont {
-  position: absolute;
-  right: 32px;
-  bottom: 36px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.barco .base .atras {
-  height: 58px;
-  width: 40px;
-  border-radius: 10px;
-  background-color: #58575C;
-  margin-left: 5px;
-  transform: skewX(13deg);
-}
-.barco .base .popa {
-  height: 58px;
-  width: 95px;
-  transform: skewX(37deg);
-  border-radius: 10px 18px 10px 18px;
-  position: absolute;
-  left: 30px;
-  top: 0;
-}
-.barco .base .tronco {
-  width: 347px;
-  height: 37px;
-  position: absolute;
-  left: 9px;
-  bottom: 0;
-  z-index: 10;
-}
-.barco .base .tronco .marca {
-  height: 14px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0%;
-  -webkit-perspective: 150px;
-}
-.barco .base .tronco .marca .per {
-  height: 100%;
-  background-color: rgba(255, 0, 0, 0.4);
-  transform: rotateX(7deg);
-  border-radius: 0 0 3px 3px;
-}
-.barco .base .proa {
-  height: 58px;
-  width: 91px;
-  transform: skewX(-47deg);
-  border-radius: 14px 10px 10px 18px;
-  position: absolute;
-  right: 26px;
-  top: 0;
-}
-.barco .puente {
-  width: 118px;
-  height: 124px;
-  position: absolute;
-  left: 12px;
-  top: 0;
-}
-.barco .puente .franja {
-  background-color: #58575C;
-  position: absolute;
-  bottom: 70px;
-  width: 35px;
-  height: 5px;
-  transform: skewX(-5deg);
-  left: 10px;
-}
-.barco .puente .camarote1 {
-  position: absolute;
-  bottom: 0;
-  left: 5px;
-  width: 36px;
-  height: 70px;
-  transform: skewX(-5deg);
-  background-color: white;
-}
-.barco .puente .camarote1:after {
-  content: " ";
-  position: absolute;
-  bottom: 0;
-  right: -2px;
-  background-color: #CCCDD1;
-  height: 100%;
-  width: 3px;
-  z-index: -1;
-  transform: skewX(3deg);
-}
-.barco .puente .camarote1 .antiskew {
-  transform: skewX(5deg);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 7px 7px;
-  height: 45px;
-}
-.barco .puente .camarote1 .ventana {
-  width: 5px;
-  height: 5px;
-  border-radius: 1px;
-  background-color: #003F5F;
-  margin: 2px;
-}
-.barco .puente .chimeneal, .barco .puente .chimenear {
-  background-color: white;
-}
-.barco .puente .chimeneal .linea, .barco .puente .chimenear .linea {
-  height: 10px;
-  width: 100%;
-  margin-top: 4px;
-  background-color: red;
-}
-.barco .puente .chimeneal {
-  width: 14px;
-  height: 43px;
-  position: absolute;
-  top: 9px;
-  left: 16px;
-  transform: skewX(-6deg);
-}
-.barco .puente .chimenear {
-  width: 20px;
-  height: 43px;
-  position: absolute;
-  top: 9px;
-  left: 19px;
-}
-.barco .fantena {
-  position: absolute;
-  width: 2px;
-  height: 40px;
-  left: 87px;
-  top: 2px;
-  background-color: #3a3939;
-  border-radius: 3px;
-}
-.barco .santenea {
-  position: absolute;
-  width: 2px;
-  height: 20px;
-  left: 83px;
-  top: 19px;
-  background-color: #3a3939;
-  border-radius: 3px;
-}
-.barco .radar {
-  position: absolute;
-  height: 20px;
-  left: 50px;
-  top: 19px;
-}
-.barco .radar .cabeza {
-  width: 18px;
-  height: 7px;
-  background-color: white;
-  -webkit-animation-name: radar;
-          animation-name: radar;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-}
-.barco .radar .soporte {
-  width: 4px;
-  height: 20px;
-  background-color: white;
-  margin-left: 7px;
-  margin-top: -8px;
-  border-radius: 1px;
-}
-.barco .control {
-  width: 62px;
-  height: 57px;
-  background-color: white;
-  position: absolute;
-  right: 13px;
-  top: 36px;
-  padding-top: 15px;
-  padding-bottom: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  border-bottom: solid 1px #CCCDD1;
-}
-.barco .control .tapa {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 2px;
-  background-color: white;
-  height: 13px;
-  transform: skewX(-8deg);
-  border-radius: 0 4px 0 0;
-  padding: 2px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.barco .control .tapa .top-ventana {
-  background-color: #003F5F;
-  height: 6px;
-  width: 28%;
-  transform: skewX(5deg);
-}
-.barco .control .mid-ventana {
-  width: 5px;
-  height: 5px;
-  border-radius: 1px;
-  background-color: #003F5F;
-  display: block;
-  margin: 2px;
-}
-.barco .control .mid-ventana:nth-of-type(7) {
-  margin-left: 10px;
-}
-.barco .control .puertita {
-  bottom: 2px;
-}
-.barco .bajo-camarotes {
-  background-color: white;
-  width: 69px;
-  height: 31px;
-  position: absolute;
-  bottom: 0;
-  right: 6px;
-  display: flex;
-  justify-content: flex-end;
-  padding: 5px 5px 14px 41px;
-  flex-wrap: wrap;
-}
-.barco .bajo-camarotes:after {
-  content: " ";
-  background-color: white;
-  position: absolute;
-  right: -2px;
-  top: 0;
-  width: 5px;
-  height: 100%;
-  transform: rotate(-7deg);
-}
-.barco .bajo-camarotes .ventanitas {
-  background-color: #003F5F;
-  width: 5px;
-  height: 3px;
-  border-radius: 2px;
-  margin: 1px;
-}
-.barco .bajo-camarotes .ventanitas:nth-of-type(4) {
-  margin-left: 4px;
-}
-.barco .contenedores {
-  width: 158px;
-  height: 80px;
-  position: absolute;
-  top: 80px;
-  right: 102px;
-  -webkit-animation-name: contenedores;
-          animation-name: contenedores;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 5s;
-          animation-duration: 5s;
-}
-.barco .contenedores .contenedor {
-  width: 50px;
-  height: 16px;
-  background-color: #a4b8b9;
-  padding: 1px 2px;
-  display: flex;
-  float: left;
-  justify-content: space-around;
-  margin-bottom: 1px;
-  margin-right: 1px;
-}
-.barco .contenedores .contenedor:nth-of-type(2) {
-  background-color: #4f4a65;
-}
-.barco .contenedores .contenedor:nth-of-type(4) {
-  background-color: #b36730;
-}
-.barco .contenedores .cal {
-  background: black;
-  height: 100%;
-  width: 2px;
-  border-radius: 1px;
-  opacity: 0.07;
-}
-
-.elmar {
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  justify-content: center;
-  background-color: #C0EBFF;
-}
-.elmar .agua {
-  background-color: #25b9ee;
-  width: 100%;
-  height: 36%;
-  position: absolute;
-  bottom: 0;
   left: 0;
-  opacity: 0.8;
-}
-.elmar .agua .olacont {
-  width: 200%;
-  top: -18px;
-  position: relative;
-  -webkit-animation-name: ola;
-          animation-name: ola;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 30s;
-          animation-duration: 30s;
-  -webkit-animation-timing-function: lineal;
-          animation-timing-function: lineal;
+  top: 0;
+  z-index: 999999;
+  transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), height 0s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.olita {
-  fill: #25b9ee;
-  -webkit-animation-name: olita;
-          animation-name: olita;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-  position: relative;
+.page-preloader .preloader__icon {
+  width: 140px;
+  height: 135px;
+  padding: 20px;
+  border-radius: 500px;
+  background-color: #e4ebf1;
+  box-shadow: 0px 0px 11px #c9c9c9;
+}
+.page-preloader svg {
+  width: 100px;
+  height: 87px;
+}
+.page-preloader #ship {
+  animation: ship 3s ease-in-out infinite;
+}
+.page-preloader #ship polygon {
+  fill: #1C2F4E;
+}
+.page-preloader #wave1 {
+  transform: translate3d(25px, 360px, 0) scale(0.8);
+  animation: wave1 4s ease-in-out infinite;
+}
+.page-preloader #wave1 polygon {
+  fill: #6EB2D6;
+}
+.page-preloader #wave2 {
+  transform: translate3d(75px, 400px, 0) scale(0.8);
+  animation: wave2 4s 1s ease-in-out infinite;
+}
+.page-preloader #wave2 polygon {
+  fill: #4797BF;
 }
 
+@keyframes ship {
+  0% {
+    transform: translate3d(65px, 0, 0);
+  }
+  50% {
+    transform: translate3d(75px, 5px, 0) rotate(1deg);
+  }
+  100% {
+    transform: translate3d(65px, 0, 0);
+  }
+}
+@keyframes wave1 {
+  0% {
+    transform: translate3d(25px, 360px, 0) scale(0.8);
+  }
+  50% {
+    transform: translate3d(50px, 360px, 0) scale(0.8);
+  }
+  100% {
+    transform: translate3d(25px, 360px, 0) scale(0.8);
+  }
+}
+@keyframes wave2 {
+  0% {
+    transform: translate3d(75px, 400px, 0) scale(0.8);
+  }
+  50% {
+    transform: translate3d(50px, 400px, 0) scale(0.8);
+  }
+  100% {
+    transform: translate3d(75px, 400px, 0) scale(0.8);
+  }
+}
 /********\loading************/
 
 

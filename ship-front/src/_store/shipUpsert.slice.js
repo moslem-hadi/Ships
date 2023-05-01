@@ -61,7 +61,7 @@ function createExtraReducers() {
         state = { loading: true };
       },
       [fulfilled]: (state, action) => {
-        state = action.payload;
+        state = { ...action.payload, added: true };
       },
       [rejected]: (state, action) => {
         state = { error: action.error };

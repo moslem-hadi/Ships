@@ -19,7 +19,7 @@ public class CreateShipCommandValidator : AbstractValidator<CreateShipCommand>
 
         RuleFor(v => v.ShipCode)
             .NotEmpty().WithMessage("ShipCode is required.")
-            .MaximumLength(10).WithMessage("ShipCode must not exceed 10 characters.")
+            .MaximumLength(12).WithMessage("ShipCode must not exceed 12 characters.")
             .MustAsync(
                 async (model, shipId, cancellation) =>
                 {

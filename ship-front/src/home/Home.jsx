@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { shipsActions, modalActions } from '../_store';
-import { Ships, Loading } from '../components';
+import { Ships, Loading, Empty } from '../components';
 
 export { Home };
 
@@ -36,9 +36,10 @@ function Home() {
                 Add new
               </button>
             </div>
-            {ships?.items?.length && (
+            {ships?.items?.length > 0 && (
               <Ships ships={ships} handlePageChange={handlePageChange} />
             )}
+            {ships?.items?.length == 0 && <Empty />}
           </div>
         </div>
       </div>
