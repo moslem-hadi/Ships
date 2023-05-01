@@ -21,6 +21,9 @@ code {
 .pagination{
   margin-bottom: 0;
 }
+.cursor{
+  cursor: pointer;
+}
 
 html, body{
   height: 100%;

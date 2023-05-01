@@ -9,13 +9,8 @@ import { shipUpsertActions, shipsActions, modalActions } from '../_store';
 
 const Modal = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // redirect to home if already logged in
-    //if (authUser) history.navigate('/');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  //  /^[a-zA-Z]{4}-\d{4}-[a-zA-Z]{1}\d{1}/
+  const codeRegex = /^[a-zA-Z]{4}[-]{1}\d{4}[-]{1}[a-zA-Z]{1}\d{1}$/;
   // form validation rules
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -30,7 +25,7 @@ const Modal = () => {
       .typeError('Length must be a number')
       .required('Length is required.')
       .positive(),
-    shipCode: Yup.string().matches(/^[a-zA-Z]{4}-\d{4}-[a-zA-Z]{1}\d{1}/, {
+    shipCode: Yup.string().length(12).matches(codeRegex, {
       message: "Code must match 'AAAA-1111-A1'",
       excludeEmptyString: true,
     }),
@@ -87,6 +82,7 @@ const Modal = () => {
                   <label>Code</label>
                   <input
                     name="shipCode"
+                    maxLength="12"
                     type="text"
                     {...register('shipCode')}
                     className={`form-control  mt-1 ${
@@ -101,7 +97,7 @@ const Modal = () => {
                   <label>Length</label>
                   <input
                     name="length"
-                    type="text"
+                    type="number"
                     {...register('length')}
                     className={`form-control  mt-1 ${
                       errors.length ? 'is-invalid' : ''
@@ -115,7 +111,7 @@ const Modal = () => {
                   <label>Width</label>
                   <input
                     name="width"
-                    type="text"
+                    type="number"
                     {...register('width')}
                     className={`form-control  mt-1 ${
                       errors.width ? 'is-invalid' : ''

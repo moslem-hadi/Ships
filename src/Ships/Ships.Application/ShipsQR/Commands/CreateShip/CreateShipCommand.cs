@@ -2,34 +2,40 @@
 using Ships.Domain.Entities;
 using MediatR;
 using Ships.Domain.ValueObjects;
+using Ships.Application.Common.Security;
+using Ships.Application.ShipsQR.Queries;
+using AutoMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Ships.Application.ShipsQR.Commands.CreateTodoList;
+namespace Ships.Application.ShipsQR.Commands;
 
-public record CreateShipCommand : IRequest<int>
+[Authorize]
+public class CreateShipCommand : ShipDto, IRequest<int>
 {
-    public string Name { get; init; }
-    public int Length { get; set; }
-    public int Width { get; set; }
-    public string ShipCode { get; set; }
+    public int csddcsc { get; set; }
+    public static implicit operator Ship(CreateShipCommand ship) => new()
+    {
+        Length = ship.Length,
+        Width = ship.Width,
+        Name = ship.Name,
+        ShipCode = Domain.ValueObjects.ShipCode.From(ship.ShipCode)
+    };
 }
 
-public class CreateTodoListCommandHandler : IRequestHandler<CreateShipCommand, int>
+public class CreateShipCommandHandler : IRequestHandler<CreateShipCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CreateTodoListCommandHandler(IApplicationDbContext context)
+    public CreateShipCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<int> Handle(CreateShipCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Ship();
-
-        entity.Name = request.Name;
-        entity.Length = request.Length;
-        entity.Width = request.Width;
-        entity.ShipCode = ShipCode.From(request.ShipCode);
+        var entity = (Ship)request;
 
         _context.Ships.Add(entity);
 

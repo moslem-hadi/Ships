@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ships.Application.ShipsQR.Commands.UpdateTodoList;
+namespace Ships.Application.ShipsQR.Commands;
 
 public class UpdateShipCommandValidator : AbstractValidator<UpdateShipCommand>
 {

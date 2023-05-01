@@ -1,19 +1,18 @@
 ﻿using Ships.Application.Common.Mappings;
 using Ships.Domain.Entities;
-using Ships.Domain.ValueObjects;
 
-namespace Ships.Application.ShipsQR.Queries.GetShips;
+namespace Ships.Application.ShipsQR.Queries;
 
-public sealed class ShipDto : IMapFrom<Ship>
+public  class ShipDto : IMapFrom<Ship>
 {
-    public int Id { get; init; }
+    public int? Id { get; set; }
 
-    public string? Name { get; init; }
+    public string? Name { get; set; }
     
     public int Length { get; set; }
 
     public int Width { get; set; }
 
-    public ShipCode? ShipCode { get; init; }
+    public string ShipCode { get; set; }
 
 }

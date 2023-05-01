@@ -3,16 +3,18 @@ using Ships.Application.Common.Interfaces;
 using Ships.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ships.Application.Common.Security;
 
-namespace Ships.Application.ShipsQR.Commands.DeleteTodoList;
+namespace Ships.Application.ShipsQR.Commands;
 
+[Authorize]
 public record DeleteShipCommand(int Id) : IRequest;
 
-public class DeleteTodoListCommandHandler : IRequestHandler<DeleteShipCommand>
+public class DeleteShipCommandHandler : IRequestHandler<DeleteShipCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public DeleteTodoListCommandHandler(IApplicationDbContext context)
+    public DeleteShipCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }

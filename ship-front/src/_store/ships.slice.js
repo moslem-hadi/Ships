@@ -30,6 +30,7 @@ function createExtraActions() {
 
   return {
     getAll: getAll(),
+    deleteShip: deleteShip(),
   };
 
   function getAll() {
@@ -40,11 +41,22 @@ function createExtraActions() {
         await fetchWrapper.get(`${baseUrl}?page=${page}&pageSize=${pageSize}`)
     );
   }
+  function deleteShip() {
+    //I wont ask to delete! I can use sweetalert.
+    return createAsyncThunk(
+      `${name}/deleteShip`,
+      async ({ shipId }, thunkApi) => {
+        await fetchWrapper.delete(`${baseUrl}/${shipId}`);
+        thunkApi.dispatch(shipsActions.getAll({ page: 1 }));
+      }
+    );
+  }
 }
 
 function createExtraReducers() {
   return {
     ...getAll(),
+    ...deleteShip(),
   };
 
   function getAll() {
@@ -58,6 +70,20 @@ function createExtraReducers() {
       },
       [rejected]: (state, action) => {
         state.ships = { error: action.error };
+      },
+    };
+  }
+  function deleteShip() {
+    var { pending, fulfilled, rejected } = extraActions.deleteShip;
+    return {
+      [pending]: state => {
+        state.ships = { ...state.ships, loading: true };
+      },
+      [fulfilled]: (state, action) => {
+        state.ships = { ...state.ships, deleted: true, loading: false };
+      },
+      [rejected]: (state, action) => {
+        state.ships = { ...state.ships, error: action.error, loading: false };
       },
     };
   }

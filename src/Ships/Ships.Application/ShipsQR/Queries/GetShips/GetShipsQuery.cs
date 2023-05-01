@@ -2,14 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using Ships.Application.Common.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Ships.Application.ShipsQR.Queries;
-using System.Collections.ObjectModel;
 using Ships.Application.Common.Mappings;
 using Ships.Application.Common.Models;
 using Ships.Application.Common.Security;
 
-namespace Ships.Application.ShipsQR.Queries.GetShips;
+namespace Ships.Application.ShipsQR.Queries;
 
 [Authorize]
 public class GetShipsQuery : IRequest<PaginatedList<ShipDto>>

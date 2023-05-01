@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ships.Application.Common.Interfaces;
-using Ships.Application.Common.Models;
 using Ships.Application.Common.Security;
-using Ships.Application.ShipsQR.Queries.GetShips;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Ships.Application.ShipsQR.Queries.GetShip;
+namespace Ships.Application.ShipsQR.Queries;
 
 
 [Authorize]

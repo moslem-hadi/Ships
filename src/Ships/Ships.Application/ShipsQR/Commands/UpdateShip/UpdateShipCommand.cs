@@ -2,26 +2,33 @@
 using Ships.Application.Common.Interfaces;
 using Ships.Domain.Entities;
 using MediatR;
-using Ships.Domain.ValueObjects;
+using Ships.Application.Common.Security;
+using Ships.Application.ShipsQR.Queries;
+using AutoMapper;
 
-namespace Ships.Application.ShipsQR.Commands.UpdateTodoList;
+namespace Ships.Application.ShipsQR.Commands;
 
-public record UpdateShipCommand : IRequest
+[Authorize]
+public class UpdateShipCommand : ShipDto, IRequest
 {
-    public int Id { get; init; }
-    public string Name { get; init; }
-    public int Length { get; set; }
-    public int Width { get; set; }
-    public string ShipCode { get; set; }
+    public static implicit operator Ship(UpdateShipCommand ship) => new()
+    {
+        Length = ship.Length,
+        Width = ship.Width,
+        Name = ship.Name,
+        ShipCode = Domain.ValueObjects.ShipCode.From(ship.ShipCode)
+    };
 }
 
-public class UpdateTodoListCommandHandler : IRequestHandler<UpdateShipCommand>
+public class UpdateShipCommandHandler : IRequestHandler<UpdateShipCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public UpdateTodoListCommandHandler(IApplicationDbContext context)
+    public UpdateShipCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task Handle(UpdateShipCommand request, CancellationToken cancellationToken)
@@ -33,12 +40,7 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateShipCommand>
         {
             throw new NotFoundException(nameof(Ship), request.Id);
         }
-
-        entity.Name = request.Name;
-        entity.Length = request.Length;
-        entity.Width = request.Width;
-        entity.ShipCode = ShipCode.From(request.ShipCode);
-
+        entity = (Ship)(request);
         await _context.SaveChangesAsync(cancellationToken);
 
     }

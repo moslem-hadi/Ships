@@ -1,7 +1,14 @@
 import Pagination from 'react-js-pagination';
 import { Delete, Edit, Eye } from '../_helpers/isons';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { shipsActions } from '../_store';
 function Ships({ ships, handlePageChange }) {
+  const dispatch = useDispatch();
+  const deleteHandle = async shipId => {
+    await dispatch(shipsActions.deleteShip({ shipId }));
+  };
+
   return (
     <>
       <div className="table-responsive">
@@ -21,20 +28,20 @@ function Ships({ ships, handlePageChange }) {
               <tr className="align-middle" key={i}>
                 <td>{item.id}</td>
                 <td> {item.name}</td>
-                <td>{item.shipCode.code}</td>
+                <td>{item.shipCode}</td>
                 <td> {item.length}</td>
                 <td> {item.width}</td>
 
-                <td width={120}>
+                <td width={100}>
                   <span className="icon me-3">
                     <Link to={`/view/${item.id}`}>
                       <Eye />
                     </Link>
                   </span>
-                  <span className="icon me-3">
-                    <Edit />
-                  </span>
-                  <span className="text-danger icon">
+                  <span
+                    className="text-danger icon cursor"
+                    onClick={() => deleteHandle(item.id)}
+                  >
                     <Delete />
                   </span>
                 </td>
