@@ -11,9 +11,6 @@ function ShipForm({ shipId, afterSubmit }) {
   const { ship } = useSelector(x => x.ship);
   const shipUpsert = useSelector(x => x.shipUpsert);
 
-  const shipUpsertDone = useSelector(x => x.shipUpsert.done);
-  const shipUpsertError = useSelector(x => x.shipUpsert.error);
-
   useEffect(() => {
     if (shipId) getShip(parseInt(shipId));
 
