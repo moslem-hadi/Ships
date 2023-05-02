@@ -1,33 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Ships.Application.Common.Models;
-using Ships.Application.ShipsQR.Queries.GetShips;
-using System.Diagnostics;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Ships.Application.ShipsQR.Queries;
 
 namespace Ships.WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ISender? _mediator;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ISender? mediator)
+        public HomeController( ISender? mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _logger = logger;
         }
-
-        //public async Task<IActionResult> Index([FromQuery]GetShipsQuery query)
-        //{
-        //    var ships = await _mediator.Send(query);
-        //    return View(ships);
-        //}
-
-
-        public async Task<IActionResult> Index([FromQuery] GetShipsQuery query,
-            string currentFilter)
+        public async Task<IActionResult> Index([FromQuery] GetShipsQuery query, string currentFilter,CancellationToken cancellationToken)
         {
             ViewData["CurrentSort"] = query.Sort;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(query.Sort) ? "name_desc" : "";
@@ -45,7 +30,7 @@ namespace Ships.WebApp.Controllers
 
             ViewData["CurrentFilter"] = query.Filter;
 
-            var ships = await _mediator.Send(query);
+            var ships = await _mediator!.Send(query, cancellationToken);
             return View(ships);
         }
 

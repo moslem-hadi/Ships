@@ -55,13 +55,16 @@ public static class ConfigureServices
         {
             options.SaveToken = true;
             options.RequireHttpsMetadata = false;
+            var aud = configuration["JWT:ValidAudience"];
+            var ValidAudience = configuration["JWT:ValidIssuer"];
+            var Issuer = configuration["JWT:Secret"]!;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidAudience = configuration["JWT:ValidAudience"],
+                ValidAudience = ValidAudience,
                 ValidIssuer = configuration["JWT:ValidIssuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Issuer))
             };
         });
 

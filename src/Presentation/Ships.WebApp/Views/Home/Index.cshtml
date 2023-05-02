@@ -1,6 +1,6 @@
 ﻿@using System.Collections.ObjectModel;
 @using Ships.Application.Common.Models;
-@using Ships.Application.ShipsQR.Queries.GetShips;
+@using Ships.Application.ShipsQR.Queries;
 @using Ships.WebApp.Infrastructure.Common;
 @model PaginatedList<ShipDto>;
 @{
@@ -8,21 +8,14 @@
 }
 
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name:
-
             <div class="input-group mb-3">
                 <input type="text" class="form-control" value="@ViewData["filter"]" placeholder="Search by name..." >
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
             </div>
              
-            <a asp-action="Index">Back to Full List</a>
         </p>
     </div>
 </form>
@@ -45,7 +38,6 @@
                 <a asp-action="Index" asp-route-sort="@ViewData["WidthSortParm"]"
                    asp-route-filter="@ViewData["filter"]">Width</a>
             </th>
-            <th width="200"></th>
         </tr>
     </thead>
     <tbody>
@@ -56,18 +48,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShipCode.Code)
+                    @Html.DisplayFor(modelItem => item.ShipCode)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Length)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Width)
-                </td>
-                <td align="center">
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil"></i></a>
-                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-eye"></i></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times"></i></a>
                 </td>
             </tr>
         }

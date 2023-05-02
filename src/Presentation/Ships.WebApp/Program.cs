@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
+using Ships.Application.Common.Interfaces;
+using Ships.WebApp.Services;
+
 namespace Ships.WebApp
 {
     public class Program
@@ -11,6 +15,8 @@ namespace Ships.WebApp
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+            builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             builder.Services.AddHttpContextAccessor();
 
