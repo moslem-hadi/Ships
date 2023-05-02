@@ -1,4 +1,6 @@
-﻿namespace Ships.Domain.ValueObjects;
+﻿using System.Text.RegularExpressions;
+
+namespace Ships.Domain.ValueObjects;
 
 public sealed class ShipCode : ValueObject
 {
@@ -19,7 +21,7 @@ public sealed class ShipCode : ValueObject
     {
         var shipCode = new ShipCode { Code = code };
 
-        if (!Validate())
+        if (!Validate(shipCode))
         {
             throw new UnsupportedCodeException(code);
         }
@@ -29,9 +31,13 @@ public sealed class ShipCode : ValueObject
 
     public string Code { get; private set; } = "AAAA-1111-A1";
 
-    private static bool Validate()
+    private static bool Validate(ShipCode shipCode)
     {
-        return true;
+        if (shipCode.Code.Length != 12)
+            return false;
+        var regex = @"^[a-zA-Z]{4}[-]{1}\d{4}[-]{1}[a-zA-Z]{1}\d{1}$";
+        var match = Regex.Match(shipCode.Code, regex, RegexOptions.IgnoreCase);
+        return match.Success;
     }
 
     public static implicit operator string(ShipCode code)
