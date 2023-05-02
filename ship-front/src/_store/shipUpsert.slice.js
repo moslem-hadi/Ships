@@ -19,7 +19,11 @@ export const shipUpsertReducer = slice.reducer;
 
 function createInitialState() {
   return {
-    loading: true,
+    shipUpsert: {
+      loading: true,
+      done: false,
+      error: 'no error',
+    },
   };
 }
 
@@ -35,7 +39,7 @@ function createExtraActions() {
       `${name}/post`,
       async ({ id, name, width, length, shipCode }, thunkApi) => {
         if (id)
-          await fetchWrapper.put(`${baseUrl}/${id}`, {
+          return await fetchWrapper.put(`${baseUrl}/${id}`, {
             id,
             name,
             width,
@@ -43,7 +47,12 @@ function createExtraActions() {
             shipCode,
           });
         else
-          await fetchWrapper.post(baseUrl, { name, width, length, shipCode });
+          return await fetchWrapper.post(baseUrl, {
+            name,
+            width,
+            length,
+            shipCode,
+          });
       }
     );
   }
@@ -58,14 +67,32 @@ function createExtraReducers() {
     var { pending, fulfilled, rejected } = extraActions.createShip;
     return {
       [pending]: state => {
-        state = { loading: true };
+        state.shipUpsert = { loading: true };
       },
       [fulfilled]: (state, action) => {
-        state = { ...action.payload, added: true };
+        state.shipUpsert = { done: true };
       },
       [rejected]: (state, action) => {
-        state = { error: action.error };
+        state.shipUpsert = { error: 'action.error' };
+        console.log('state.shipUpsert', state.shipUpsert);
       },
     };
   }
 }
+
+// const baseUrl = `${process.env.REACT_APP_API_URL}ships`;
+
+// export const createShip = createAsyncThunk(
+//   `${name}/post`,
+//   async ({ id, name, width, length, shipCode }, { dispatch, getState }) => {
+//     return fetch(`${baseUrl}/${id}`, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ id, name, width, length, shipCode }),
+//     }).then(res => {
+//       return res.json();
+//     });
+//   }
+// );

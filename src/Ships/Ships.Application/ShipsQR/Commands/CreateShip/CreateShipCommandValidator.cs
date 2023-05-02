@@ -32,10 +32,10 @@ public class CreateShipCommandValidator : AbstractValidator<CreateShipCommand>
 
     private async Task<bool> IsUniqueShipCodeAsync(string shipCode, int? shipId, CancellationToken cancellationToken)
     {
-        return await _context.Ships
-            .AllAsync(l => l.ShipCode.Code != shipCode && (shipId == null || l.Id != shipId), cancellationToken);
+        return !(await _context.Ships
+                .AnyAsync(l => l.ShipCode.Code == shipCode && (shipId == null || l.Id != shipId), cancellationToken));
     }
-    public bool CodeIsValid(string shipCode)
+    private bool CodeIsValid(string shipCode)
     {
         var regex = @"^[a-zA-Z]{4}[-]{1}\d{4}[-]{1}[a-zA-Z]{1}\d{1}$";
         var match = Regex.Match(shipCode, regex, RegexOptions.IgnoreCase);
