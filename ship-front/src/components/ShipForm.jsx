@@ -145,7 +145,7 @@ function ShipForm({ shipId, afterSubmit }) {
             className="btn btn-primary"
           >
             {isSubmitting && (
-              <span className="spinner-border spinner-border-sm mr-1"></span>
+              <span className="spinner-border spinner-border-sm me-2"></span>
             )}
             Submit
           </button>

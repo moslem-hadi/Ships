@@ -2,6 +2,6 @@
 
 namespace Ships.Domain.Common;
 
-public abstract class BaseEvent : INotification
+public abstract record BaseEvent : INotification
 {
 }

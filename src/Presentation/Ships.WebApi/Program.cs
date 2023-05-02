@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using Ships.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

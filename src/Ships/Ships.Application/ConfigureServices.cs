@@ -2,6 +2,7 @@
 using Ships.Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
+using MediatR.NotificationPublishers;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class ConfigureServices
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+            cfg.NotificationPublisher = new TaskWhenAllPublisher();//Publish Notifications In Parallel
 
         });
 

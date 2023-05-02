@@ -44,7 +44,6 @@ function Home() {
         </div>
       </div>
 
-      {ships?.loading && <Loading />}
       {ships?.error && (
         <div className="text-danger">
           Error loading ships: {ships.error.message}

@@ -5,14 +5,13 @@ using Ships.Domain.ValueObjects;
 using Ships.Application.Common.Security;
 using Ships.Application.ShipsQR.Queries;
 using AutoMapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Ships.Domain.Events;
 
 namespace Ships.Application.ShipsQR.Commands;
 
 [Authorize]
 public class CreateShipCommand : ShipDto, IRequest<int>
 {
-    public int csddcsc { get; set; }
     public static implicit operator Ship(CreateShipCommand ship) => new()
     {
         Length = ship.Length,
@@ -37,6 +36,7 @@ public class CreateShipCommandHandler : IRequestHandler<CreateShipCommand, int>
     {
         var entity = (Ship)request;
 
+        entity.AddDomainEvent(new ShipCreatedEvent(entity));
         _context.Ships.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);

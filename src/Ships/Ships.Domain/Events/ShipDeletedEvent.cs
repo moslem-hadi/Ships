@@ -1,11 +1,5 @@
 ﻿namespace Ships.Domain.Events;
 
-public class ShipDeletedEvent : BaseEvent
+public record ShipDeletedEvent(Ship ship) : BaseEvent
 {
-    public ShipDeletedEvent(Ship ship)
-    {
-        Ship = ship;
-    }
-
-    public Ship Ship { get; }
 }

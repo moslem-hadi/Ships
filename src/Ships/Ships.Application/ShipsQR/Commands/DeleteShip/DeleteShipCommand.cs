@@ -4,6 +4,7 @@ using Ships.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ships.Application.Common.Security;
+using Ships.Domain.Events;
 
 namespace Ships.Application.ShipsQR.Commands;
 
@@ -29,6 +30,7 @@ public class DeleteShipCommandHandler : IRequestHandler<DeleteShipCommand>
         {
             throw new NotFoundException(nameof(Ship), request.Id);
         }
+        entity.AddDomainEvent(new ShipDeletedEvent(entity));
 
         _context.Ships.Remove(entity);
 

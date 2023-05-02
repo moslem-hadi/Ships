@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { history } from './_helpers';
-import { Nav, PrivateRoute, Modal } from './components';
+import { Nav, PrivateRoute, Modal, Loading } from './components';
 import { Home } from './home';
 import { Login } from './login';
 import { useSelector } from 'react-redux';
@@ -21,9 +21,14 @@ function App() {
   history.navigate = useNavigate();
   history.location = useLocation();
   const { isOpen } = useSelector(store => store.modal);
+  const { ships } = useSelector(x => x.ships);
   return (
     <>
-      <div className={`app-container bg-light ${isOpen && 'model-opened'}`}>
+      <div
+        className={`app-container bg-light ${
+          isOpen || ships?.loading ? 'model-opened' : ''
+        }`}
+      >
         <Nav />
         <div className="container pt-4 pb-4">
           <Routes>
@@ -49,6 +54,7 @@ function App() {
         </div>
       </div>
       {isOpen && <Modal />}
+      {ships?.loading && <Loading />}
     </>
   );
 }
