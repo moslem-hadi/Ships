@@ -2,28 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { fetchWrapper } from '../_helpers';
 
-// create slice
-
-const name = 'shipUpsert';
-const initialState = createInitialState();
-const extraActions = createExtraActions();
-const extraReducers = createExtraReducers();
-const slice = createSlice({ name, initialState, extraReducers });
-
-// exports
-
-export const shipUpsertActions = { ...slice.actions, ...extraActions };
-export const shipUpsertReducer = slice.reducer;
-
 // implementation
 
 function createInitialState() {
   return {
-    shipUpsert: {
-      loading: true,
-      done: false,
-      error: 'no error',
-    },
+    loading: true,
+    done: false,
+    error: null,
   };
 }
 
@@ -38,21 +23,9 @@ function createExtraActions() {
     return createAsyncThunk(
       `${name}/post`,
       async ({ id, name, width, length, shipCode }, thunkApi) => {
-        if (id)
-          return await fetchWrapper.put(`${baseUrl}/${id}`, {
-            id,
-            name,
-            width,
-            length,
-            shipCode,
-          });
-        else
-          return await fetchWrapper.post(baseUrl, {
-            name,
-            width,
-            length,
-            shipCode,
-          });
+        const model = { id, name, width, length, shipCode };
+        if (id) return await fetchWrapper.put(`${baseUrl}/${id}`, model);
+        else return await fetchWrapper.post(baseUrl, model);
       }
     );
   }
@@ -67,32 +40,74 @@ function createExtraReducers() {
     var { pending, fulfilled, rejected } = extraActions.createShip;
     return {
       [pending]: state => {
-        state.shipUpsert = { loading: true };
+        state = { loading: true };
       },
       [fulfilled]: (state, action) => {
-        state.shipUpsert = { done: true };
+        state = { done: true };
       },
       [rejected]: (state, action) => {
-        state.shipUpsert = { error: 'action.error' };
-        console.log('state.shipUpsert', state.shipUpsert);
+        state = { error: 'action.error' };
       },
     };
   }
 }
 
+// create slice
+
+const name = 'shipUpsert1';
+const initialState = createInitialState();
+const extraActions = createExtraActions();
+const extraReducers = createExtraReducers();
+const slice = createSlice({ name, initialState, extraReducers });
+
+// exports
+
+export const shipUpsertActions = { ...slice.actions, ...extraActions };
+export const shipUpsertReducer = slice.reducer;
+
+// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // const baseUrl = `${process.env.REACT_APP_API_URL}ships`;
 
-// export const createShip = createAsyncThunk(
-//   `${name}/post`,
-//   async ({ id, name, width, length, shipCode }, { dispatch, getState }) => {
-//     return fetch(`${baseUrl}/${id}`, {
-//       method: 'PUT',
+// export const upsert = createAsyncThunk(
+//   'updateShips',
+//   async (model, { dispatch, getState }) => {
+//     return await fetch(`${baseUrl}/${model.id}`, {
+//       method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//       mode: 'cors', // no-cors, *cors, same-origin
+//       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//       credentials: 'same-origin', // include, *same-origin, omit
 //       headers: {
 //         'Content-Type': 'application/json',
+//         // 'Content-Type': 'application/x-www-form-urlencoded',
 //       },
-//       body: JSON.stringify({ id, name, width, length, shipCode }),
-//     }).then(res => {
-//       return res.json();
+//       redirect: 'follow', // manual, *follow, error
+//       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//       body: JSON.stringify(model), // body data type must match "Content-Type" header
 //     });
 //   }
 // );
+
+// export const slice = createSlice({
+//   name: 'updateShips',
+//   initialState: {
+//     loading: true,
+//     done: false,
+//     error: 'no error',
+//   },
+//   extraReducers: {
+//     [upsert.pending]: (state, action) => {
+//       state.loading = true;
+//     },
+//     [upsert.fulfilled]: (state, { payload }) => {
+//       state.done = true;
+//       state.loading = false;
+//     },
+//     [upsert.rejected]: (state, action) => {
+//       state.error = 'failed';
+//       state.loading = false;
+//     },
+//   },
+// });
+
+// export const shipUpsertActions = { ...slice.actions };
+// export const shipUpsertReducer = slice.reducer;

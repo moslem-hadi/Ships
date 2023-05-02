@@ -16,6 +16,13 @@ const Modal = () => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Create a ship</h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              onClick={() => dispatch(modalActions.closeModal())}
+            ></button>
           </div>
           <div className="modal-body">
             {' '}

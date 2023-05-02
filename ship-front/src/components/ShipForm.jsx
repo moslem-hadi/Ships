@@ -9,7 +9,10 @@ import { Loading } from '../components';
 function ShipForm({ shipId, afterSubmit }) {
   const dispatch = useDispatch();
   const { ship } = useSelector(x => x.ship);
-  const { shipUpsert } = useSelector(x => x.shipUpsert);
+  const shipUpsert = useSelector(x => x.shipUpsert);
+
+  const shipUpsertDone = useSelector(x => x.shipUpsert.done);
+  const shipUpsertError = useSelector(x => x.shipUpsert.error);
 
   useEffect(() => {
     if (shipId) getShip(parseInt(shipId));
@@ -18,14 +21,16 @@ function ShipForm({ shipId, afterSubmit }) {
   }, []);
 
   useEffect(() => {
-    let defaultValues = {
-      id: ship.id,
-      name: ship?.name,
-      shipCode: ship?.shipCode,
-      width: ship?.width,
-      length: ship?.length,
-    };
-    reset({ ...defaultValues });
+    if (shipId) {
+      let defaultValues = {
+        id: ship.id,
+        name: ship?.name,
+        shipCode: ship?.shipCode,
+        width: ship?.width,
+        length: ship?.length,
+      };
+      reset({ ...defaultValues });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ship]);
   const getShip = async shipId => {
@@ -62,7 +67,9 @@ function ShipForm({ shipId, afterSubmit }) {
     await dispatch(
       shipUpsertActions.createShip({ id, name, width, length, shipCode })
     );
-    if (shipUpsert.done) afterSubmit();
+    //TODO: handle error......
+    // if (shipUpsert.done)
+    afterSubmit();
   }
 
   return (
@@ -144,7 +151,6 @@ function ShipForm({ shipId, afterSubmit }) {
           </button>
         </div>
       </form>
-      <h3>xasxa: {ship?.error}</h3>
     </>
   );
 }

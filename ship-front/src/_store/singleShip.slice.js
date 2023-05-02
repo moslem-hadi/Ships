@@ -30,6 +30,7 @@ function createExtraActions() {
 
   return {
     GetById: GetById(),
+    GetById: GetById(),
   };
 
   function GetById() {
