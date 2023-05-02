@@ -80,7 +80,9 @@ function ShipForm({ shipId, afterSubmit }) {
 
         <div className="modal-body">
           {shipUpsert?.error && (
-            <div className="text-danger">Error: {shipUpsert.error.message}</div>
+            <div className="alert alert-danger text-center">
+              Error: {shipUpsert.error.message}
+            </div>
           )}
           <div className="form-group">
             <label>Name</label>

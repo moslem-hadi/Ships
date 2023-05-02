@@ -39,13 +39,13 @@ function Home() {
             {ships?.items?.length > 0 && (
               <Ships ships={ships} handlePageChange={handlePageChange} />
             )}
-            {ships?.items?.length == 0 && <Empty />}
+            {(ships?.items?.length ?? 0) == 0 && !ships?.loading && <Empty />}
           </div>
         </div>
       </div>
 
       {ships?.error && (
-        <div className="text-danger">
+        <div className="alert alert-danger text-center">
           Error loading ships: {ships.error.message}
         </div>
       )}

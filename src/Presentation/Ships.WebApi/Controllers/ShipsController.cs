@@ -38,12 +38,9 @@ public class ShipsController : BaseApiController
     public async Task<IActionResult> Update([FromRoute]int id,[FromBody] UpdateShipCommand command)
     {
         if (id != command.Id)
-        {
             return BadRequest();
-        }
 
         await Mediator.Send(command);
-
         return NoContent();
     }
 
