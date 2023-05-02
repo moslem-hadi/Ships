@@ -28,7 +28,6 @@ public class ApplicationDbContextInitializer
         {
             if (_context.Database.IsSqlServer())
             {
-                _logger.LogError("InitializeAsync2: " + _context.Database.GetConnectionString());
                 await _context.Database.MigrateAsync();
             }
         }
