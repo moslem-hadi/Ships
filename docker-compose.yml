@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  ship-api:
+    container_name: ship-api
+    image: ${DOCKER_REGISTRY-}ship-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "7195:443"
+      - "5260:80"
+
+  ship-front:
+    container_name: ship-front
+    image: ${DOCKER_REGISTRY-}ship-front
+    build:
+      context: ./ship-front/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+      
+      
+      

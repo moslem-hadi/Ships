@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  ship-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "7195:443"
+      - "5260:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - shipCrud
+
+
+  ship-front:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - shipCrud
+  
+networks:
+  shipCrud:
+    external: false
+    name: shipCrud
+
+
