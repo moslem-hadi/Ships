@@ -3,7 +3,7 @@ using Ships.Domain.Entities;
 
 namespace Ships.Application.ShipsQR.Queries;
 
-public  class ShipDto : IMapFrom<Ship>
+public record ShipDto : IMapFrom<Ship>
 {
     public int? Id { get; set; }
 

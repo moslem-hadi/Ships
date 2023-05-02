@@ -10,7 +10,7 @@ using Ships.Domain.Events;
 namespace Ships.Application.ShipsQR.Commands;
 
 [Authorize]
-public class CreateShipCommand : ShipDto, IRequest<int>
+public record CreateShipCommand : ShipDto, IRequest<int>
 {
     public static implicit operator Ship(CreateShipCommand ship) => new()
     {

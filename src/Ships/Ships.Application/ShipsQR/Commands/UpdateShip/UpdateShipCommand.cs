@@ -9,7 +9,7 @@ using AutoMapper;
 namespace Ships.Application.ShipsQR.Commands;
 
 [Authorize]
-public class UpdateShipCommand : ShipDto, IRequest
+public record UpdateShipCommand : ShipDto, IRequest
 {
     public static implicit operator Ship(UpdateShipCommand ship) => new()
     {
