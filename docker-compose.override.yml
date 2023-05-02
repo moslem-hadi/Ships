@@ -25,6 +25,10 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     networks:
       - shipCrud
+
+  db:
+    networks:
+      - shipCrud
   
 networks:
   shipCrud:

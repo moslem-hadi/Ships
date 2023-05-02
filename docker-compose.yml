@@ -10,6 +10,17 @@ services:
     ports:
       - "7195:443"
       - "5260:80"
+    depends_on:
+      - db
+
+  db:
+    container_name: sql_server2022
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"
+    environment:
+        SA_PASSWORD: "S3cur3P@ssW0rd!"
+        ACCEPT_EULA: "Y"
 
   ship-front:
     container_name: ship-front
