@@ -1,3 +1,4 @@
+using Ships.Infrastructure.Middlewares;
 using Ships.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
     }
 }
 
+app.UseMiddleware(typeof(ExceptionHandlingMiddleware));
 
 app.UseCors(builder => builder
     .AllowAnyOrigin()

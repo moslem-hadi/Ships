@@ -48,7 +48,7 @@ function Home() {
 
       {ships?.error && (
         <div className="alert alert-danger text-center">
-          Error loading ships: {ships.error.message}
+          {ships.error.message}
         </div>
       )}
     </div>
