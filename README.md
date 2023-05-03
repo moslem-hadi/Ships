@@ -35,6 +35,8 @@ And run docker compose:
 ```
 docker-compose up -d
 ```
+Then open `http://localhost:3000`
+
 
 **Make sure that ports 3000 and 7195 are free**
 
