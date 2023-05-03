@@ -49,11 +49,25 @@ function handleResponse(response) {
         const logout = () => store.dispatch(authActions.logout());
         logout();
       }
-
-      const error = (data && data.message) || response.statusText;
+      const error = data && flattenObj(data.errors).join(' ');
       return Promise.reject(error);
     }
 
     return data;
   });
+}
+
+function flattenObj(obj, parent, res = []) {
+  for (let key in obj) {
+    let propName = '';
+    if (Array.isArray(obj)) propName = parent ? parent : key;
+    else propName = parent ? parent + '_' + key : key;
+
+    if (typeof obj[key] == 'object') {
+      flattenObj(obj[key], propName, res);
+    } else {
+      res.push(obj[key]);
+    }
+  }
+  return res;
 }

@@ -1,12 +1,14 @@
 import Pagination from 'react-js-pagination';
-import { Delete, Edit, Eye } from '../_helpers/isons';
+import { Delete, Eye } from '../_helpers/isons';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { shipsActions } from '../_store';
+import { shipsActions, loadingActions } from '../_store';
 function Ships({ ships, handlePageChange }) {
   const dispatch = useDispatch();
   const deleteHandle = async shipId => {
+    dispatch(loadingActions.startLoading());
     await dispatch(shipsActions.deleteShip({ shipId }));
+    dispatch(loadingActions.stopLoading());
   };
 
   return (

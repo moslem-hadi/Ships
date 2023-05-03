@@ -1,13 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { shipsActions, modalActions } from '../_store';
+import { shipsActions, modalActions, loadingActions } from '../_store';
 import { ShipForm } from './index';
 
 const Modal = () => {
   const dispatch = useDispatch();
 
   const afterSubmit = async () => {
-    await dispatch(shipsActions.getAll(1));
+    dispatch(loadingActions.startLoading());
     await dispatch(modalActions.closeModal());
+    await dispatch(shipsActions.getAll(1));
+    dispatch(loadingActions.stopLoading());
   };
 
   return (
@@ -25,7 +27,6 @@ const Modal = () => {
             ></button>
           </div>
           <div className="modal-body">
-            {' '}
             <ShipForm shipId={null} afterSubmit={afterSubmit} />
           </div>
         </div>

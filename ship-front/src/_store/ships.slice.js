@@ -18,9 +18,7 @@ export const shipsReducer = slice.reducer;
 // implementation
 
 function createInitialState() {
-  return {
-    ships: {},
-  };
+  return {};
 }
 
 function createExtraActions() {
@@ -45,7 +43,7 @@ function createExtraActions() {
       `${name}/deleteShip`,
       async ({ shipId }, thunkApi) => {
         await fetchWrapper.delete(`${baseUrl}/${shipId}`);
-        thunkApi.dispatch(shipsActions.getAll({ page: 1 }));
+        return thunkApi.dispatch(shipsActions.getAll({ page: 1 }));
       }
     );
   }
@@ -60,9 +58,7 @@ function createExtraReducers() {
   function getAll() {
     var { pending, fulfilled, rejected } = extraActions.getAll;
     return {
-      [pending]: state => {
-        state.ships = { loading: true };
-      },
+      [pending]: state => {},
       [fulfilled]: (state, action) => {
         state.ships = action.payload;
       },
@@ -74,14 +70,12 @@ function createExtraReducers() {
   function deleteShip() {
     var { pending, fulfilled, rejected } = extraActions.deleteShip;
     return {
-      [pending]: state => {
-        state.ships = { ...state.ships, loading: true };
-      },
+      [pending]: state => {},
       [fulfilled]: (state, action) => {
-        state.ships = { ...state.ships, deleted: true, loading: false };
+        state.ships = { ...state.ships, deleted: true };
       },
       [rejected]: (state, action) => {
-        state.ships = { ...state.ships, error: action.error, loading: false };
+        state.ships = { ...state.ships, error: action.error };
       },
     };
   }

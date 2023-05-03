@@ -220,6 +220,7 @@ function Loading() {
               </g>
             </g>
           </svg>
+          <div className="txt">Loading...</div>
         </div>
       </div>
     </div>

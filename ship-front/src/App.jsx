@@ -21,12 +21,12 @@ function App() {
   history.navigate = useNavigate();
   history.location = useLocation();
   const { isOpen } = useSelector(store => store.modal);
-  const { ships } = useSelector(x => x.ships);
+  const { loading } = useSelector(x => x.loading);
   return (
     <>
       <div
         className={`app-container bg-light ${
-          isOpen || ships?.loading ? 'model-opened' : ''
+          isOpen || loading ? 'model-opened' : ''
         }`}
       >
         <Nav />
@@ -54,7 +54,7 @@ function App() {
         </div>
       </div>
       {isOpen && <Modal />}
-      {ships?.loading && <Loading />}
+      {loading && <Loading />}
     </>
   );
 }

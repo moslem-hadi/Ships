@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import { singleShipActions, shipUpsertActions } from '../_store';
-import { Loading } from '../components';
+import {
+  singleShipActions,
+  shipUpsertActions,
+  loadingActions,
+} from '../_store';
 
 function ShipForm({ shipId, afterSubmit }) {
   const dispatch = useDispatch();
   const { ship } = useSelector(x => x.ship);
-  const shipUpsert = useSelector(x => x.shipUpsert);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (shipId) getShip(parseInt(shipId));
@@ -31,7 +34,9 @@ function ShipForm({ shipId, afterSubmit }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ship]);
   const getShip = async shipId => {
+    dispatch(loadingActions.startLoading());
     await dispatch(singleShipActions.GetById({ shipId }));
+    dispatch(loadingActions.stopLoading());
   };
 
   const codeRegex = /^[a-zA-Z]{4}[-]{1}\d{4}[-]{1}[a-zA-Z]{1}\d{1}$/;
@@ -61,12 +66,14 @@ function ShipForm({ shipId, afterSubmit }) {
   const { errors, isSubmitting } = formState;
 
   async function onSubmit({ id, name, width, length, shipCode }) {
-    await dispatch(
-      shipUpsertActions.createShip({ id, name, width, length, shipCode })
-    );
-    //TODO: handle error......
-    // if (shipUpsert.done)
-    afterSubmit();
+    try {
+      await dispatch(
+        shipUpsertActions.createShip({ id, name, width, length, shipCode })
+      ).unwrap();
+      afterSubmit();
+    } catch (ex) {
+      setError(ex.message);
+    }
   }
 
   return (
@@ -76,10 +83,8 @@ function ShipForm({ shipId, afterSubmit }) {
         {shipId && <input type="hidden" {...register('id')} name="id" />}
 
         <div className="modal-body">
-          {shipUpsert?.error && (
-            <div className="alert alert-danger text-center">
-              Error: {shipUpsert.error.message}
-            </div>
+          {error && (
+            <div className="alert alert-danger text-center">{error}</div>
           )}
           <div className="form-group">
             <label>Name</label>
@@ -130,12 +135,6 @@ function ShipForm({ shipId, afterSubmit }) {
             />
             <div className="invalid-feedback">{errors.width?.message}</div>
           </div>
-
-          {/* {error && (
-      <div className="alert alert-danger mt-3 mb-0">
-        {error.message}
-      </div>
-    )} */}
         </div>
         <div className="modal-footer d-flex align-items-center justify-content-between">
           <button

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { shipsActions, modalActions } from '../_store';
-import { Ships, Loading, Empty } from '../components';
+import { shipsActions, modalActions, loadingActions } from '../_store';
+import { Ships, Empty } from '../components';
 
 export { Home };
 
@@ -19,7 +19,9 @@ function Home() {
   }, []);
 
   const getShips = async (page = 1) => {
+    dispatch(loadingActions.startLoading());
     await dispatch(shipsActions.getAll({ page }));
+    dispatch(loadingActions.stopLoading());
   };
   return (
     <div>
@@ -39,7 +41,7 @@ function Home() {
             {ships?.items?.length > 0 && (
               <Ships ships={ships} handlePageChange={handlePageChange} />
             )}
-            {(ships?.items?.length ?? 0) == 0 && !ships?.loading && <Empty />}
+            {(ships?.items?.length ?? 0) == 0 && <Empty />}
           </div>
         </div>
       </div>

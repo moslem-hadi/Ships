@@ -5,6 +5,9 @@ using MediatR;
 using Ships.Application.Common.Security;
 using Ships.Application.ShipsQR.Queries;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Ships.Domain.ValueObjects;
+using System.Xml.Linq;
 
 namespace Ships.Application.ShipsQR.Commands;
 
@@ -16,7 +19,8 @@ public record UpdateShipCommand : ShipDto, IRequest
         Length = ship.Length,
         Width = ship.Width,
         Name = ship.Name,
-        ShipCode = Domain.ValueObjects.ShipCode.From(ship.ShipCode)
+        ShipCode = Domain.ValueObjects.ShipCode.From(ship.ShipCode),
+        Id = (int)ship.Id,
     };
 }
 
@@ -40,8 +44,14 @@ public class UpdateShipCommandHandler : IRequestHandler<UpdateShipCommand>
         {
             throw new NotFoundException(nameof(Ship), request.Id);
         }
-        entity = (Ship)(request);
-        await _context.SaveChangesAsync(cancellationToken);
+        //TODO: fix
+        entity.Length = request.Length;
+        entity.Width = request.Width;
+        entity.Name = request.Name;
+        entity.ShipCode = ShipCode.From(request.ShipCode);
+         
+       // _context.Ships.Entry(entity).CurrentValues.SetValues((Ship)(request));
+        var x= await _context.SaveChangesAsync(cancellationToken);
 
     }
 }
