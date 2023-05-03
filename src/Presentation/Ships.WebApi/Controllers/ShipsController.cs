@@ -13,30 +13,40 @@ public class ShipsController : BaseApiController
 {
     [HttpGet]
     public async Task<PaginatedList<ShipDto>> GetAll([FromQuery] GetShipsQuery query)
-        => await Mediator.Send(query);
+    {
+        await Task.Delay(1000);
+        return await Mediator.Send(query);
+    }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ShipDto> GetById(int id)
-        => (await Mediator.Send(new GetShipByIdQuery(id))) ?? throw new NotFoundException();
+    {
+        await Task.Delay(1000);
+        return (await Mediator.Send(new GetShipByIdQuery(id))) ?? throw new NotFoundException();
+    }
 
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<int> Create( CreateShipCommand createCommand)
-        => await Mediator.Send(createCommand);
+    public async Task<int> Create(CreateShipCommand createCommand)
+    {
+        await Task.Delay(1000);
+        return await Mediator.Send(createCommand);
+    }
 
 
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Update([FromRoute]int id,[FromBody] UpdateShipCommand command)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateShipCommand command)
     {
+        await Task.Delay(1000);
         if (id != command.Id)
             return BadRequest();
 
@@ -49,6 +59,7 @@ public class ShipsController : BaseApiController
     [ProducesDefaultResponseType]
     public async Task<IActionResult> Delete(int id)
     {
+        await Task.Delay(1000);
         await Mediator.Send(new DeleteShipCommand(id));
 
         return NoContent();
