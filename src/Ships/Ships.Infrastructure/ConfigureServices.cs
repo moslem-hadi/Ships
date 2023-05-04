@@ -25,7 +25,8 @@ public static class ConfigureServices
             builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(provider => 
+                provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ApplicationDbContextInitializer>();
 
@@ -39,11 +40,6 @@ public static class ConfigureServices
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-
-        //services.AddAuthentication()
-        //    .AddIdentityServerJwt();
-
-
 
         services.AddAuthentication(options =>
         {

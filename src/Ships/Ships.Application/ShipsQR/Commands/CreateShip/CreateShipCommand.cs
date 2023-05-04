@@ -24,17 +24,16 @@ public record CreateShipCommand : ShipDto, IRequest<int>
 public class CreateShipCommandHandler : IRequestHandler<CreateShipCommand, int>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public CreateShipCommandHandler(IApplicationDbContext context, IMapper mapper)
+    public CreateShipCommandHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<int> Handle(CreateShipCommand request, CancellationToken cancellationToken)
     {
         var entity = (Ship)request;
+        //var entity = _mapper.Map<Ship>(request)
 
         entity.AddDomainEvent(new ShipCreatedEvent(entity));
         _context.Ships.Add(entity);

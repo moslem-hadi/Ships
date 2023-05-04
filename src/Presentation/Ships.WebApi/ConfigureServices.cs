@@ -13,13 +13,6 @@ public static class ConfigureServices
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-        services.AddHttpContextAccessor();
-
-        services.AddControllersWithViews();
-
-        services.AddRazorPages();
-
-        services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
