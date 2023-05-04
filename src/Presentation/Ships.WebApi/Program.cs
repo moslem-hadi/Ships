@@ -29,7 +29,7 @@ if (app.Environment.IsDevelopment())
     }
 }
 
-app.UseMiddleware(typeof(ExceptionHandlingMiddleware));
+//app.UseMiddleware(typeof(ExceptionHandlingMiddleware));
 
 app.UseCors(builder => builder
     .AllowAnyOrigin()

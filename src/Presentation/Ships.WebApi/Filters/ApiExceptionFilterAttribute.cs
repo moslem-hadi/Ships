@@ -42,6 +42,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             HandleInvalidModelStateException(context);
             return;
         }
+        HandleOtherException(context);
     }
 
     private void HandleValidationException(ExceptionContext context)
@@ -115,6 +116,24 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.Result = new ObjectResult(details)
         {
             StatusCode = StatusCodes.Status403Forbidden
+        };
+
+        context.ExceptionHandled = true;
+    }
+    private void HandleOtherException(ExceptionContext context)
+    {
+        var details = new ProblemDetails
+        {
+            Status = StatusCodes.Status500InternalServerError,
+            //we can add message or not based on environment.
+            Title = $"Internal error occurred. {context.Exception?.Message}",
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+
+        };
+
+        context.Result = new ObjectResult(details)
+        {
+            StatusCode = StatusCodes.Status500InternalServerError
         };
 
         context.ExceptionHandled = true;
