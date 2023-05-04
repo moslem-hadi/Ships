@@ -4,8 +4,8 @@ Just an application to show CRUD operation in .Net 6
  <p align="center"><img width=70% src="https://user-images.githubusercontent.com/9815699/235737626-f4b50838-97a6-49b3-9f50-34ece1678c68.png"></p>
  
 What is used:
-- .Net 6
-- React 18
+- .Net 7
+- React 18 / Redux toolkits
 - JWT Authentication
 - CQRS + MdeiatR
 - MediatR Pipelines
