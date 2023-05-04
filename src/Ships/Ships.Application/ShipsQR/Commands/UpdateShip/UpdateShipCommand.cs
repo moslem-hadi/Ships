@@ -38,20 +38,18 @@ public class UpdateShipCommandHandler : IRequestHandler<UpdateShipCommand>
     public async Task Handle(UpdateShipCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Ships
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        .FindAsync(new object[] { request.Id }, cancellationToken)
+        ?? throw new NotFoundException(nameof(Ship), request.Id);
 
-        if (entity == null)
-        {
-            throw new NotFoundException(nameof(Ship), request.Id);
-        }
+
         //TODO: fix
         entity.Length = request.Length;
         entity.Width = request.Width;
         entity.Name = request.Name;
         entity.ShipCode = ShipCode.From(request.ShipCode);
-         
-       // _context.Ships.Entry(entity).CurrentValues.SetValues((Ship)(request));
-        var x= await _context.SaveChangesAsync(cancellationToken);
+
+        // _context.Ships.Entry(entity).CurrentValues.SetValues((Ship)(request));
+        await _context.SaveChangesAsync(cancellationToken);
 
     }
 }

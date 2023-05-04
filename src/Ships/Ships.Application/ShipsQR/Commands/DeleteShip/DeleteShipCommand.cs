@@ -22,14 +22,11 @@ public class DeleteShipCommandHandler : IRequestHandler<DeleteShipCommand>
 
     public async Task Handle(DeleteShipCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Ships
-            .Where(l => l.Id == request.Id)
-            .SingleOrDefaultAsync(cancellationToken);
 
-        if (entity == null)
-        {
-            throw new NotFoundException(nameof(Ship), request.Id);
-        }
+        var entity = await _context.Ships
+          .FindAsync(new object[] { request.Id }, cancellationToken) 
+          ?? throw new NotFoundException(nameof(Ships), request.Id);
+
         entity.AddDomainEvent(new ShipDeletedEvent(entity));
 
         _context.Ships.Remove(entity);
