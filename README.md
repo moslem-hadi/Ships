@@ -15,7 +15,7 @@ What is used:
 
 
 To Do:
-- [×] Fix frontend error handling :(
+- [x] Fix frontend error handling :(
 - [ ] Rate limiting for frontend
 - [ ] Api versioning
 - [ ] Adding Serilog
