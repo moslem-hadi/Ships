@@ -8,7 +8,7 @@ const Modal = () => {
   const afterSubmit = async () => {
     dispatch(loadingActions.startLoading());
     await dispatch(modalActions.closeModal());
-    await dispatch(shipsActions.getAll(1));
+    await dispatch(shipsActions.getAll({ page: 1 }));
     dispatch(loadingActions.stopLoading());
   };
 
