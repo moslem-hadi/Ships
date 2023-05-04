@@ -1,6 +1,6 @@
 ﻿namespace Ships.Domain.Entities;
 
-public class Ship : BaseAuditableEntity
+public class Ship : BaseAuditableEntity<int>
 {
     public string Name { get; set; }
     public int Length { get; set; }

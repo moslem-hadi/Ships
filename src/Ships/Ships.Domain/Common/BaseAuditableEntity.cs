@@ -1,6 +1,8 @@
-﻿namespace Ships.Domain.Common;
+﻿using Ships.Domain.Common.Contracts;
 
-public abstract class BaseAuditableEntity : BaseEntity
+namespace Ships.Domain.Common;
+
+public abstract class BaseAuditableEntity<TId> : BaseEntity<TId>, IAuditableEntity
 {
     public DateTime Created { get; set; }
 

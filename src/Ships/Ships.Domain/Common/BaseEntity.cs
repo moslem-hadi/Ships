@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Ships.Domain.Common.Contracts;
 
 namespace Ships.Domain.Common;
 
-public abstract class BaseEntity
+public abstract class BaseEntity<TId> : IBaseEntity
 {
-    public int Id { get; set; }
+    public TId Id { get; set; }
 
     private readonly List<BaseEvent> _domainEvents = new();
 
