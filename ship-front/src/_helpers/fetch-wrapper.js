@@ -49,7 +49,7 @@ function handleResponse(response) {
         const logout = () => store.dispatch(authActions.logout());
         logout();
       }
-      const error = data && data?.title;
+      let error = data && data?.title;
       if (data?.errors) error = flattenObj(data.errors)?.join(' ');
       return Promise.reject(error);
     }
