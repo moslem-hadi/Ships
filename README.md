@@ -51,3 +51,23 @@ Then open `http://localhost:3000`
 npm i
 npm start
 ```
+
+## Here's what I did:
+I used .Net 7 and I have  5 projects:
+
+This structure is based on a clean architecture solution. the Infrastructure layer is responsible for implementing the Application layer.  
+There is a validation for Ship code in the front end using Yup. and another validation in the back end using FluentValidation.
+
+I used MediatR to make my controllers cleaner and follow the CQRS pattern. Also, I used MediatR Notification to handle some events like ShipCreated or ShipDeleted.  
+I used MediatR pipeline behaviours to   
+* Check if the user is authenticated  
+* Log long-running requests.  
+* And perform validation on commands and queries.  
+  
+I used AuthoMapper to map Entities to DTOs and reverse.   
+  
+For testing, I used NUnit, FluentAssertions, and Moq
+  
+For the front end, I used React and redux toolkits.
+  
+Finally, I created a docker-compose file so the project can run with a command. And I used SQL server image.
